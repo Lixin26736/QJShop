@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String username = claims.get("username", String.class);
             Integer role = claims.get("role", Integer.class);
             Long userId = claims.get("userId", Long.class);
-            String roleName = role != null && role == 1 ? "ROLE_ADMIN" : "ROLE_USER";
+            String roleName = role != null && role >= 1 ? "ROLE_ADMIN" : "ROLE_USER";
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     userId,  // principal 改为 userId
                     null,

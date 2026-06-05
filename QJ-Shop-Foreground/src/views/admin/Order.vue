@@ -66,6 +66,32 @@
         style="margin-top: 20px; justify-content: flex-end"
       />
     </el-card>
+
+    <!-- 订单详情弹窗 -->
+    <el-dialog v-model="detailVisible" title="订单详情" width="650px">
+      <div v-if="orderDetail">
+        <el-descriptions :column="2" border>
+          <el-descriptions-item label="订单号">{{ orderDetail.orderNo }}</el-descriptions-item>
+          <el-descriptions-item label="状态">
+            <el-tag :type="getStatusType(orderDetail.status)">{{ getStatusText(orderDetail.status) }}</el-tag>
+          </el-descriptions-item>
+          <el-descriptions-item label="总金额">¥{{ orderDetail.totalAmount }}</el-descriptions-item>
+          <el-descriptions-item label="实付">¥{{ orderDetail.payAmount }}</el-descriptions-item>
+          <el-descriptions-item label="支付方式">{{ orderDetail.payType === 1 ? '微信' : '支付宝' }}</el-descriptions-item>
+          <el-descriptions-item label="创建时间">{{ orderDetail.createTime }}</el-descriptions-item>
+        </el-descriptions>
+        <div style="margin-top:15px">
+          <h4>商品明细</h4>
+          <el-table :data="orderItems" style="width:100%;margin-top:10px">
+            <el-table-column prop="productName" label="商品" />
+            <el-table-column prop="specInfo" label="规格" />
+            <el-table-column prop="price" label="单价" width="100"><template #default="{ row }">¥{{ row.price }}</template></el-table-column>
+            <el-table-column prop="quantity" label="数量" width="60" />
+            <el-table-column prop="totalPrice" label="小计" width="100"><template #default="{ row }">¥{{ row.totalPrice }}</template></el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -166,12 +192,25 @@ const getStatusText = (status) => {
   return texts[status] || '未知'
 }
 
-const handleView = (row) => {
-  ElMessage.info(`查看订单: ${row.orderNo}`)
+const detailVisible = ref(false)
+const orderDetail = ref(null)
+const orderItems = ref([])
+
+const handleView = async (row) => {
+  try {
+    const res = await request.get(`/admin/orders/${row.id}`)
+    orderDetail.value = res.order
+    orderItems.value = res.items || []
+    detailVisible.value = true
+  } catch (e) { ElMessage.error('加载失败') }
 }
 
-const handleDeliver = (row) => {
-  ElMessage.info(`发货订单: ${row.orderNo}`)
+const handleDeliver = async (row) => {
+  try {
+    await request.put(`/admin/orders/${row.id}/ship`)
+    ElMessage.success('发货成功')
+    loadOrders()
+  } catch (e) { ElMessage.error('操作失败') }
 }
 
 onMounted(() => {

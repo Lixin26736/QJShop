@@ -55,32 +55,50 @@ const routes = [
       {
         path: 'orders',
         name: 'OrderList',
-        component: () => import('@/views/client/PlaceholderPage.vue'),
+        component: () => import('@/views/client/OrderList.vue'),
         meta: { title: '我的订单', requiresAuth: true }
+      },
+      {
+        path: 'order/:id',
+        name: 'OrderDetail',
+        component: () => import('@/views/client/OrderDetail.vue'),
+        meta: { title: '订单详情', requiresAuth: true }
       },
       {
         path: 'address',
         name: 'AddressList',
-        component: () => import('@/views/client/PlaceholderPage.vue'),
+        component: () => import('@/views/client/AddressList.vue'),
         meta: { title: '收货地址', requiresAuth: true }
       },
       {
         path: 'favorites',
         name: 'FavoriteList',
-        component: () => import('@/views/client/PlaceholderPage.vue'),
+        component: () => import('@/views/client/FavoriteList.vue'),
         meta: { title: '我的收藏', requiresAuth: true }
       },
       {
         path: 'product/:id',
         name: 'ProductDetail',
-        component: () => import('@/views/client/PlaceholderPage.vue'),
+        component: () => import('@/views/client/ProductDetail.vue'),
         meta: { title: '商品详情' }
+      },
+      {
+        path: 'checkout',
+        name: 'Checkout',
+        component: () => import('@/views/client/Checkout.vue'),
+        meta: { title: '确认订单', requiresAuth: true }
       },
       {
         path: 'settings',
         name: 'UserSettings',
         component: () => import('@/views/client/UserSettings.vue'),
         meta: { title: '账号设置', requiresAuth: true }
+      },
+      {
+        path: 'cs',
+        name: 'CustomerService',
+        component: () => import('@/views/client/CustomerService.vue'),
+        meta: { title: 'AI客服' }
       }
     ]
   },
@@ -113,6 +131,12 @@ const routes = [
         meta: { title: '用户管理' }
       },
       {
+        path: 'category',
+        name: 'AdminCategory',
+        component: () => import('@/views/admin/Category.vue'),
+        meta: { title: '分类管理' }
+      },
+      {
         path: 'product',
         name: 'AdminProduct',
         component: () => import('@/views/admin/Product.vue'),
@@ -123,6 +147,30 @@ const routes = [
         name: 'AdminOrder',
         component: () => import('@/views/admin/Order.vue'),
         meta: { title: '订单管理' }
+      },
+      {
+        path: 'banner',
+        name: 'AdminBanner',
+        component: () => import('@/views/admin/Banner.vue'),
+        meta: { title: 'Banner管理' }
+      },
+      {
+        path: 'review',
+        name: 'AdminReview',
+        component: () => import('@/views/admin/Review.vue'),
+        meta: { title: '评价管理' }
+      },
+      {
+        path: 'cs',
+        name: 'AdminCS',
+        component: () => import('@/views/admin/CustomerService.vue'),
+        meta: { title: '客服消息' }
+      },
+      {
+        path: 'settings',
+        name: 'AdminSettings',
+        component: () => import('@/views/admin/Settings.vue'),
+        meta: { title: '系统设置' }
       }
     ]
   }
@@ -147,32 +195,20 @@ router.beforeEach((to, from, next) => {
   // 检查是否需要登录
   if (to.meta.requiresAuth) {
     if (!isLoggedIn) {
-      // 未登录,跳转到登录页
       if (to.meta.requiresAdmin) {
-        // 管理员页面,跳转到管理员登录
-        next({
-          path: '/admin/login',
-          query: { redirect: to.fullPath }
-        })
+        next({ path: '/admin/login', query: { redirect: to.fullPath } })
       } else {
-        // 客户端页面,跳转到客户端登录
-        next({
-          path: '/login',
-          query: { redirect: to.fullPath }
-        })
+        next({ path: '/login', query: { redirect: to.fullPath } })
       }
       return
     }
 
-    // 检查是否需要管理员权限
     if (to.meta.requiresAdmin && !isAdmin) {
-      // 不是管理员,跳转到客户端首页
       next('/client/home')
       return
     }
   }
 
-  // 如果已登录,访问登录页时跳转到对应首页
   if (isLoggedIn) {
     if (to.path === '/login' || to.path === '/register') {
       next('/client/home')

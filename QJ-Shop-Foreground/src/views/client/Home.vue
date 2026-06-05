@@ -3,8 +3,13 @@
     <!-- 移动端导航栏 -->
     <van-nav-bar v-if="isMobile" title="QJ商城" />
 
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+      <van-search v-model="searchKeyword" shape="round" placeholder="搜索商品" @search="handleSearch" />
+    </div>
+
     <!-- Banner轮播 -->
-    <van-swipe class="banner" :autoplay="3000" indicator-color="white">
+    <van-swipe v-if="banners.length > 0" class="banner" :autoplay="3000" indicator-color="white">
       <van-swipe-item v-for="item in banners" :key="item.id">
         <img :src="item.image" :alt="item.title" loading="lazy" />
       </van-swipe-item>
@@ -56,15 +61,15 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { productApi } from '@/api/product'
 import { categoryApi } from '@/api/category'
+import { bannerApi } from '@/api/banner'
+import { uploadApi } from '@/api/upload'
 import { useResponsive } from '@/utils/responsive'
 
 const router = useRouter()
 const { isMobile, isTablet, isDesktop } = useResponsive()
 
-const banners = ref([
-  { id: 1, image: 'https://via.placeholder.com/375x200', title: 'Banner 1' },
-  { id: 2, image: 'https://via.placeholder.com/375x200', title: 'Banner 2' }
-])
+const searchKeyword = ref('')
+const banners = ref([])
 
 const categories = ref([])
 const hotProducts = ref([])
@@ -82,16 +87,24 @@ const productCols = computed(() => {
   return 4
 })
 
+const handleSearch = () => {
+  if (searchKeyword.value.trim()) {
+    router.push({ path: '/client/category', query: { keyword: searchKeyword.value } })
+  }
+}
+
 const loadData = async () => {
   try {
-    const [categoryRes, hotRes, newRes] = await Promise.all([
+    const [categoryRes, hotRes, newRes, bannerRes] = await Promise.all([
       categoryApi.getCategoryList(),
       productApi.getHotProducts(),
-      productApi.getNewProducts()
+      productApi.getNewProducts(),
+      bannerApi.list('home').catch(() => [])
     ])
     categories.value = categoryRes || []
     hotProducts.value = hotRes || []
     newProducts.value = newRes || []
+    banners.value = (bannerRes || []).map(b => ({ ...b, image: uploadApi.getImageUrl(b.image) }))
   } catch (error) {
     console.error('加载数据失败:', error)
   }
@@ -114,6 +127,11 @@ onMounted(() => {
 .home {
   background: #f7f8fa;
   min-height: 100vh;
+}
+
+.search-bar {
+  padding: 8px 12px;
+  background: #fff;
 }
 
 .banner img {

@@ -76,7 +76,7 @@ const onSubmit = () => {
     showToast('请选择商品')
     return
   }
-  router.push({ name: 'OrderCreate', query: { items: checkedItems.value.join(',') } })
+  router.push({ name: 'Checkout', query: { items: checkedItems.value.join(',') } })
 }
 
 const goToHome = () => {

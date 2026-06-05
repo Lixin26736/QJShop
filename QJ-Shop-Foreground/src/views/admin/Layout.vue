@@ -32,6 +32,26 @@
           <el-icon><Document /></el-icon>
           <span>订单管理</span>
         </el-menu-item>
+        <el-menu-item index="/admin/category">
+          <el-icon><Menu /></el-icon>
+          <span>分类管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/banner">
+          <el-icon><Picture /></el-icon>
+          <span>Banner管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/review">
+          <el-icon><ChatDotRound /></el-icon>
+          <span>评价管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/cs">
+          <el-icon><Service /></el-icon>
+          <span>客服消息</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/settings">
+          <el-icon><Setting /></el-icon>
+          <span>系统设置</span>
+        </el-menu-item>
       </el-menu>
     </el-drawer>
 
@@ -57,6 +77,10 @@
           <el-icon><User /></el-icon>
           <span>用户管理</span>
         </el-menu-item>
+        <el-menu-item index="/admin/category">
+          <el-icon><Menu /></el-icon>
+          <span>分类管理</span>
+        </el-menu-item>
         <el-menu-item index="/admin/product">
           <el-icon><Goods /></el-icon>
           <span>商品管理</span>
@@ -64,6 +88,22 @@
         <el-menu-item index="/admin/order">
           <el-icon><Document /></el-icon>
           <span>订单管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/banner">
+          <el-icon><Picture /></el-icon>
+          <span>Banner管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/review">
+          <el-icon><ChatDotRound /></el-icon>
+          <span>评价管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/cs">
+          <el-icon><Service /></el-icon>
+          <span>客服消息</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/settings">
+          <el-icon><Setting /></el-icon>
+          <span>系统设置</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -118,7 +158,7 @@ import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { DataAnalysis, User, Goods, Document, Menu, ArrowDown, Expand, Fold } from '@element-plus/icons-vue'
+import { DataAnalysis, User, Goods, Document, Menu, ArrowDown, Expand, Fold, Picture, ChatDotRound, Service, Setting } from '@element-plus/icons-vue'
 import { useResponsive } from '@/utils/responsive'
 
 const route = useRoute()

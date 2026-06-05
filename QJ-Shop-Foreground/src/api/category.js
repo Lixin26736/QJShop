@@ -2,11 +2,11 @@ import request from '@/utils/request'
 
 export const categoryApi = {
   getCategoryList() {
-    return request.get('/api/admin/categories/page')
+    return request.get('/api/admin/categories/first')
   },
 
   getCategoryTree() {
-    return request.get('/api/admin/categories/tree')
+    return request.get('/api/admin/categories/first')
   },
 
   getCategoryDetail(id) {

@@ -6,6 +6,7 @@ import cn.mikuyun.qjshopbackend.entity.OrderInfo;
 import cn.mikuyun.qjshopbackend.service.OrderInfoService;
 import cn.mikuyun.qjshopbackend.util.ExcelExportUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ public class OrderInfoAdminController {
 
     private final OrderInfoService orderInfoService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/page")
     public ApiResponse<PageResult<OrderInfo>> page(
             @RequestParam(defaultValue = "1") int pageNum,
@@ -35,6 +37,7 @@ public class OrderInfoAdminController {
     /**
      * 导出订单数据到Excel
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/export")
     public void export(
             @RequestParam(required = false) String orderNo,
@@ -75,17 +78,20 @@ public class OrderInfoAdminController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ApiResponse<OrderInfo> getById(@PathVariable Long id) {
         return ApiResponse.success(orderInfoService.getById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ApiResponse<Void> create(@RequestBody OrderInfo orderInfo) {
         orderInfoService.save(orderInfo);
         return ApiResponse.success();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<Void> update(@PathVariable Long id, @RequestBody OrderInfo orderInfo) {
         orderInfo.setId(id);
@@ -93,6 +99,7 @@ public class OrderInfoAdminController {
         return ApiResponse.success();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
         orderInfoService.delete(id);

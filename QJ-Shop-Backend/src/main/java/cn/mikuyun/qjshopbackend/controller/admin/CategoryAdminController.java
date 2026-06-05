@@ -5,6 +5,7 @@ import cn.mikuyun.qjshopbackend.common.PageResult;
 import cn.mikuyun.qjshopbackend.entity.Category;
 import cn.mikuyun.qjshopbackend.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,12 +49,14 @@ public class CategoryAdminController {
         return ApiResponse.success(categoryService.getById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ApiResponse<Void> create(@RequestBody Category category) {
         categoryService.save(category);
         return ApiResponse.success();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<Void> update(@PathVariable Long id, @RequestBody Category category) {
         category.setId(id);
@@ -61,6 +64,7 @@ public class CategoryAdminController {
         return ApiResponse.success();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
         categoryService.delete(id);

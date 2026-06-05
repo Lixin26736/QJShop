@@ -6,6 +6,7 @@ import cn.mikuyun.qjshopbackend.entity.Product;
 import cn.mikuyun.qjshopbackend.service.ProductService;
 import cn.mikuyun.qjshopbackend.util.ExcelExportUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,6 +37,7 @@ public class ProductAdminController {
     /**
      * 导出商品数据到Excel
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/export")
     public void export(
             @RequestParam(required = false) String keyword,
@@ -80,12 +82,14 @@ public class ProductAdminController {
         return ApiResponse.success(productService.getById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ApiResponse<Void> create(@RequestBody Product product) {
         productService.save(product);
         return ApiResponse.success();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<Void> update(@PathVariable Long id, @RequestBody Product product) {
         product.setId(id);
@@ -93,6 +97,7 @@ public class ProductAdminController {
         return ApiResponse.success();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
         productService.delete(id);

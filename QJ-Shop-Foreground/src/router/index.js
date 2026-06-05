@@ -53,6 +53,30 @@ const routes = [
         meta: { title: '个人信息', requiresAuth: true }
       },
       {
+        path: 'orders',
+        name: 'OrderList',
+        component: () => import('@/views/client/PlaceholderPage.vue'),
+        meta: { title: '我的订单', requiresAuth: true }
+      },
+      {
+        path: 'address',
+        name: 'AddressList',
+        component: () => import('@/views/client/PlaceholderPage.vue'),
+        meta: { title: '收货地址', requiresAuth: true }
+      },
+      {
+        path: 'favorites',
+        name: 'FavoriteList',
+        component: () => import('@/views/client/PlaceholderPage.vue'),
+        meta: { title: '我的收藏', requiresAuth: true }
+      },
+      {
+        path: 'product/:id',
+        name: 'ProductDetail',
+        component: () => import('@/views/client/PlaceholderPage.vue'),
+        meta: { title: '商品详情' }
+      },
+      {
         path: 'settings',
         name: 'UserSettings',
         component: () => import('@/views/client/UserSettings.vue'),

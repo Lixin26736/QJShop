@@ -6,6 +6,7 @@ import cn.mikuyun.qjshopbackend.entity.User;
 import cn.mikuyun.qjshopbackend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +21,7 @@ public class UserProfileController {
 
     private final UserService userService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ApiResponse<User> getProfile(Authentication authentication) {
         if (authentication == null || authentication.getName() == null) {
@@ -33,6 +35,7 @@ public class UserProfileController {
         return ApiResponse.success(user);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PutMapping
     public ApiResponse<Void> updateProfile(
             Authentication authentication,

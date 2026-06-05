@@ -6,6 +6,7 @@ import cn.mikuyun.qjshopbackend.entity.User;
 import cn.mikuyun.qjshopbackend.service.UserService;
 import cn.mikuyun.qjshopbackend.util.ExcelExportUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ public class UserAdminController {
 
     private final UserService userService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/page")
     public ApiResponse<PageResult<User>> page(
             @RequestParam(defaultValue = "1") int pageNum,
@@ -35,6 +37,7 @@ public class UserAdminController {
     /**
      * 导出用户数据到Excel
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/export")
     public void export(
             @RequestParam(required = false) String keyword,
@@ -67,17 +70,20 @@ public class UserAdminController {
         ExcelExportUtil.exportExcel(response, "用户数据", "用户列表", headers, dataList);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ApiResponse<User> getById(@PathVariable Long id) {
         return ApiResponse.success(userService.getById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ApiResponse<Void> create(@RequestBody User user) {
         userService.save(user);
         return ApiResponse.success();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<Void> update(@PathVariable Long id, @RequestBody User user) {
         user.setId(id);
@@ -85,6 +91,7 @@ public class UserAdminController {
         return ApiResponse.success();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
         userService.delete(id);

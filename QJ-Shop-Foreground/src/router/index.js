@@ -182,7 +182,7 @@ const router = createRouter({
 })
 
 // 路由守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
   // 设置页面标题
   if (to.meta.title) {
     document.title = to.meta.title + ' - QJ商城'
@@ -196,35 +196,27 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     if (!isLoggedIn) {
       if (to.meta.requiresAdmin) {
-        next({ path: '/admin/login', query: { redirect: to.fullPath } })
-      } else {
-        next({ path: '/login', query: { redirect: to.fullPath } })
+        return { path: '/admin/login', query: { redirect: to.fullPath } }
       }
-      return
+      return { path: '/login', query: { redirect: to.fullPath } }
     }
 
     if (to.meta.requiresAdmin && !isAdmin) {
-      next('/client/home')
-      return
+      return '/client/home'
     }
   }
 
   if (isLoggedIn) {
     if (to.path === '/login' || to.path === '/register') {
-      next('/client/home')
-      return
+      return '/client/home'
     }
     if (to.path === '/admin/login') {
       if (isAdmin) {
-        next('/admin/dashboard')
-      } else {
-        next('/client/home')
+        return '/admin/dashboard'
       }
-      return
+      return '/client/home'
     }
   }
-
-  next()
 })
 
 export default router

@@ -1,49 +1,48 @@
 import request from '@/utils/request'
 
 export const productApi = {
-  // 客户端商品接口
   getProductList(params) {
-    return request.get('/products/page', { params })
+    return request.get('/api/products/page', { params })
   },
 
   searchProducts(params) {
-    return request.get('/products/search', { params })
+    return request.get('/api/products/search', { params })
   },
 
   getProductDetail(id) {
-    return request.get(`/products/${id}`)
+    return request.get(`/api/products/${id}`)
   },
 
   getHotProducts() {
-    return request.get('/products/hot')
+    return request.get('/api/products/hot')
   },
 
   getNewProducts() {
-    return request.get('/products/new')
+    return request.get('/api/products/new')
   },
 
-  // 管理端商品接口
+  // Admin
   adminPage(params) {
-    return request.get('/admin/products/page', { params })
+    return request.get('/api/admin/products/page', { params })
   },
 
   adminGetById(id) {
-    return request.get(`/admin/products/${id}`)
+    return request.get(`/api/admin/products/${id}`)
   },
 
   adminCreate(data) {
-    return request.post('/admin/products', data)
+    return request.post('/api/admin/products', data)
   },
 
   adminUpdate(id, data) {
-    return request.put(`/admin/products/${id}`, data)
+    return request.put(`/api/admin/products/${id}`, data)
   },
 
   adminDelete(id) {
-    return request.delete(`/admin/products/${id}`)
+    return request.delete(`/api/admin/products/${id}`)
   },
 
   adminExport(params) {
-    return request.get('/admin/products/export', { params, responseType: 'blob' })
+    return request.get('/api/admin/products/export', { params, responseType: 'blob' })
   }
 }

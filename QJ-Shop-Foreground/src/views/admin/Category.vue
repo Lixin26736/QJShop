@@ -78,7 +78,7 @@ const resetForm = () => { Object.assign(form, { id: null, name: '', sortOrder: 0
 
 const loadFirst = async () => {
   loading.value = true
-  try { firstCategories.value = await request.get('/admin/categories/first') || [] }
+  try { firstCategories.value = await request.get('/api/admin/categories/first') || [] }
   catch (e) { ElMessage.error('加载失败') }
   finally { loading.value = false }
 }
@@ -108,8 +108,8 @@ const handleSubmit = async () => {
   if (!valid) return
   submitLoading.value = true
   try {
-    if (isEdit.value) await request.put(`/admin/categories/${form.id}`, form)
-    else await request.post('/admin/categories', form)
+    if (isEdit.value) await request.put(`/api/admin/categories/${form.id}`, form)
+    else await request.post('/api/admin/categories', form)
     ElMessage.success(isEdit.value ? '修改成功' : '添加成功')
     dialogVisible.value = false
     childrenCache.value = {}
@@ -119,7 +119,7 @@ const handleSubmit = async () => {
 }
 const handleDelete = (id) => {
   ElMessageBox.confirm('确定删除?', '提示', { type: 'warning' })
-    .then(async () => { await request.delete(`/admin/categories/${id}`); ElMessage.success('已删除'); childrenCache.value = {}; loadFirst() })
+    .then(async () => { await request.delete(`/api/admin/categories/${id}`); ElMessage.success('已删除'); childrenCache.value = {}; loadFirst() })
     .catch(() => {})
 }
 

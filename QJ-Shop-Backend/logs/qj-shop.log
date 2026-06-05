@@ -1235,3 +1235,65 @@ This generated password is for development use only. Your security configuration
 2026-06-06 03:03:40.248 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL start create  ...  
 2026-06-06 03:03:40.248 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL end create  ...  
 2026-06-06 03:03:40.249 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-06-06 03:14:14.946 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - Starting QjShopBackendApplication using Java 17.0.14 with PID 39392 (D:\QJShop\QJ-Shop-Backend\target\classes started by Miku in D:\QJShop\QJ-Shop-Backend)
+2026-06-06 03:14:14.947 [restartedMain] DEBUG cn.mikuyun.qjshopbackend.QjShopBackendApplication - Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-06-06 03:14:14.947 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-06-06 03:14:15.001 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-06 03:14:15.001 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-06 03:14:16.415 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-06-06 03:14:16.426 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-06-06 03:14:16.426 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-06-06 03:14:16.488 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-06-06 03:14:16.488 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1486 ms
+2026-06-06 03:14:16.573 [restartedMain] DEBUG c.m.qjshopbackend.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-06-06 03:14:16.636 [restartedMain] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2026-06-06 03:14:17.332 [restartedMain] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2026-06-06 03:14:17.437 [restartedMain] DEBUG c.b.m.e.spring.MybatisSqlSessionFactoryBean - Registered plugin: 'com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor@7f5e418d'
+2026-06-06 03:14:17.437 [restartedMain] DEBUG c.b.m.e.spring.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was not specified.
+2026-06-06 03:14:18.051 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: f1dcc53a-162d-43a3-b644-bbbcbac36c9f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-06-06 03:14:18.387 [restartedMain] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@e06a58, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7fca17a9, org.springframework.security.web.context.SecurityContextHolderFilter@3bef89d, org.springframework.security.web.header.HeaderWriterFilter@6ff6e226, org.springframework.web.filter.CorsFilter@37912250, org.springframework.security.web.authentication.logout.LogoutFilter@12d5c486, cn.mikuyun.qjshopbackend.security.JwtAuthenticationFilter@3c08ceec, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1cda4b15, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2b66b783, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@47ecd0f0, org.springframework.security.web.session.SessionManagementFilter@66d28458, org.springframework.security.web.access.ExceptionTranslationFilter@71d7148c, org.springframework.security.web.access.intercept.AuthorizationFilter@43d78045]
+2026-06-06 03:14:18.667 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-06-06 03:14:18.726 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-06-06 03:14:18.736 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - Started QjShopBackendApplication in 4.185 seconds (process running for 4.624)
+2026-06-06 03:14:18.736 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL start create  ...  
+2026-06-06 03:14:18.736 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL end create  ...  
+2026-06-06 03:15:14.040 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-06 03:15:14.041 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-06-06 03:15:14.042 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-06-06 03:15:14.441 [http-nio-8080-exec-1] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.RuntimeException: 用户名或密码错误]
+2026-06-06 03:15:14.826 [http-nio-8080-exec-6] INFO  org.apache.coyote.http11.Http11Processor - Error parsing HTTP request header
+ Note: further occurrences of HTTP request parsing errors will be logged at DEBUG level.
+java.lang.IllegalArgumentException: Invalid character found in the request target [/api/products/search?keyword=0xca0xd60xbb0xfa&pageNum=1&pageSize=2 ]. The valid characters are defined in RFC 7230 and RFC 3986
+	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:482)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:264)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2026-06-06 03:15:14.946 [http-nio-8080-exec-7] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.security.access.AccessDeniedException: Access Denied]
+2026-06-06 03:16:06.147 [http-nio-8080-exec-10] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Invalid UTF-8 start byte 0xb9]
+2026-06-06 03:20:57.384 [http-nio-8080-exec-6] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource products/new.]
+2026-06-06 03:20:57.384 [http-nio-8080-exec-4] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource products/hot.]
+2026-06-06 03:20:57.384 [http-nio-8080-exec-7] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource banners.]
+2026-06-06 03:22:00.139 [http-nio-8080-exec-8] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .]
+2026-06-06 03:22:00.245 [http-nio-8080-exec-9] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026-06-06 03:22:20.185 [http-nio-8080-exec-10] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .]
+2026-06-06 03:22:20.291 [http-nio-8080-exec-1] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026-06-06 03:22:31.444 [http-nio-8080-exec-5] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026-06-06 03:22:32.022 [http-nio-8080-exec-8] INFO  org.springdoc.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 510 ms
+2026-06-06 03:29:29.106 [http-nio-8080-exec-1] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .]
+2026-06-06 03:29:29.310 [http-nio-8080-exec-5] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026-06-06 03:29:37.143 [http-nio-8080-exec-4] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource admin'.]
+2026-06-06 03:29:37.196 [http-nio-8080-exec-8] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026-06-06 03:29:42.483 [http-nio-8080-exec-6] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource admin.]
+2026-06-06 03:29:42.536 [http-nio-8080-exec-7] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2026-06-06 03:33:28.300 [http-nio-8080-exec-2] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource api/api/admin/categories/first.]

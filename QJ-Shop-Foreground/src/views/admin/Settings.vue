@@ -45,7 +45,7 @@ const changePassword = async () => {
   if (!valid) return
   pwdLoading.value = true
   try {
-    await request.put('/user/profile', { password: pwdForm.newPassword })
+    await request.put('/api/user/profile', { password: pwdForm.newPassword })
     ElMessage.success('密码修改成功, 请重新登录')
     userStore.logout()
     window.location.href = '/admin/login'

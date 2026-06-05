@@ -198,7 +198,7 @@ const orderItems = ref([])
 
 const handleView = async (row) => {
   try {
-    const res = await request.get(`/admin/orders/${row.id}`)
+    const res = await request.get(`/api/admin/orders/${row.id}`)
     orderDetail.value = res.order
     orderItems.value = res.items || []
     detailVisible.value = true
@@ -207,7 +207,7 @@ const handleView = async (row) => {
 
 const handleDeliver = async (row) => {
   try {
-    await request.put(`/admin/orders/${row.id}/ship`)
+    await request.put(`/api/admin/orders/${row.id}/ship`)
     ElMessage.success('发货成功')
     loadOrders()
   } catch (e) { ElMessage.error('操作失败') }

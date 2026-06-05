@@ -2,11 +2,11 @@ import request from '@/utils/request'
 
 export const userApi = {
   login(data) {
-    return request.post('/api/admin/auth/login', data)
+    return request.post('/api/auth/login', data)
   },
 
   register(data) {
-    return request.post('/api/admin/auth/register', data)
+    return request.post('/api/auth/register', data)
   },
 
   getUserInfo() {

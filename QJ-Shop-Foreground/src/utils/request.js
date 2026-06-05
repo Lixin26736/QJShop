@@ -3,7 +3,6 @@ import { useUserStore } from '@/store/user'
 import { showToast } from 'vant'
 
 const request = axios.create({
-  baseURL: '/api',
   timeout: 10000
 })
 

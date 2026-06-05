@@ -1,10 +1,13 @@
 package cn.mikuyun.qjshopbackend.vo;
 
+import cn.mikuyun.qjshopbackend.entity.OrderInfo;
+import cn.mikuyun.qjshopbackend.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,4 +20,6 @@ public class DashboardStatsVO {
     private Long todayOrderCount;
     private BigDecimal totalSales;
     private BigDecimal todaySales;
+    private List<OrderInfo> recentOrders;
+    private List<Product> hotProducts;
 }

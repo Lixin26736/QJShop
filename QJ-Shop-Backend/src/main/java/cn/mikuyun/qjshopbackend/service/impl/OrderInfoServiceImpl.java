@@ -59,4 +59,14 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     public void delete(Long id) {
         orderInfoMapper.deleteById(id);
     }
+
+    @Override
+    public PageResult<OrderInfo> pageByUser(int pageNum, int pageSize, Long userId, Integer status) {
+        LambdaQueryWrapper<OrderInfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(OrderInfo::getUserId, userId)
+                .eq(status != null, OrderInfo::getStatus, status)
+                .orderByDesc(OrderInfo::getId);
+        Page<OrderInfo> page = orderInfoMapper.selectPage(new Page<>(pageNum, pageSize), wrapper);
+        return new PageResult<>(page.getTotal(), page.getCurrent(), page.getSize(), page.getRecords());
+    }
 }

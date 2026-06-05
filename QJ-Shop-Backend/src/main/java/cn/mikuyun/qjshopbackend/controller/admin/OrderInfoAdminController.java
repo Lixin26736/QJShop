@@ -3,7 +3,9 @@ package cn.mikuyun.qjshopbackend.controller.admin;
 import cn.mikuyun.qjshopbackend.common.ApiResponse;
 import cn.mikuyun.qjshopbackend.common.PageResult;
 import cn.mikuyun.qjshopbackend.entity.OrderInfo;
+import cn.mikuyun.qjshopbackend.entity.OrderItem;
 import cn.mikuyun.qjshopbackend.service.OrderInfoService;
+import cn.mikuyun.qjshopbackend.service.OrderItemService;
 import cn.mikuyun.qjshopbackend.util.ExcelExportUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/admin/orders")
@@ -21,6 +23,7 @@ import java.util.List;
 public class OrderInfoAdminController {
 
     private final OrderInfoService orderInfoService;
+    private final OrderItemService orderItemService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/page")
@@ -80,8 +83,37 @@ public class OrderInfoAdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
-    public ApiResponse<OrderInfo> getById(@PathVariable Long id) {
-        return ApiResponse.success(orderInfoService.getById(id));
+    public ApiResponse<Map<String, Object>> getById(@PathVariable Long id) {
+        OrderInfo order = orderInfoService.getById(id);
+        List<OrderItem> items = orderItemService.listByOrderId(id);
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("order", order);
+        result.put("items", items);
+        return ApiResponse.success(result);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/ship")
+    public ApiResponse<Void> ship(@PathVariable Long id) {
+        OrderInfo order = orderInfoService.getById(id);
+        if (order != null && order.getStatus() == 1) {
+            order.setStatus(2); // 待收货
+            order.setDeliveryTime(LocalDateTime.now());
+            orderInfoService.update(order);
+        }
+        return ApiResponse.success();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/complete")
+    public ApiResponse<Void> complete(@PathVariable Long id) {
+        OrderInfo order = orderInfoService.getById(id);
+        if (order != null && order.getStatus() == 2) {
+            order.setStatus(3); // 已完成
+            order.setReceiveTime(LocalDateTime.now());
+            orderInfoService.update(order);
+        }
+        return ApiResponse.success();
     }
 
     @PreAuthorize("hasRole('ADMIN')")

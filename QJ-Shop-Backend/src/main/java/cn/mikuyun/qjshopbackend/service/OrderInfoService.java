@@ -18,4 +18,6 @@ public interface OrderInfoService {
     void update(OrderInfo orderInfo);
 
     void delete(Long id);
+
+    PageResult<OrderInfo> pageByUser(int pageNum, int pageSize, Long userId, Integer status);
 }

@@ -24,10 +24,8 @@ public class UserProfileController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ApiResponse<User> getProfile(Authentication authentication) {
-        if (authentication == null || authentication.getName() == null) {
-            throw new RuntimeException("未登录");
-        }
-        User user = userService.getByUsername(authentication.getName());
+        String username = getUsername(authentication);
+        User user = userService.getByUsername(username);
         if (user == null) {
             throw new RuntimeException("用户不存在");
         }
@@ -41,10 +39,15 @@ public class UserProfileController {
             Authentication authentication,
             @Valid @RequestBody UserProfileUpdateRequest request
     ) {
-        if (authentication == null || authentication.getName() == null) {
+        String username = getUsername(authentication);
+        userService.updateProfileByUsername(username, request);
+        return ApiResponse.success();
+    }
+
+    private String getUsername(Authentication authentication) {
+        if (authentication == null || authentication.getDetails() == null) {
             throw new RuntimeException("未登录");
         }
-        userService.updateProfileByUsername(authentication.getName(), request);
-        return ApiResponse.success();
+        return authentication.getDetails().toString();
     }
 }

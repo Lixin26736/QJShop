@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,13 +37,24 @@ public class DashboardServiceImpl implements DashboardService {
         BigDecimal totalSales = orderInfoMapper.sumPayAmount();
         BigDecimal todaySales = orderInfoMapper.sumTodayPayAmount(start, end);
 
+        // 最近10条订单
+        List<OrderInfo> recentOrders = orderInfoMapper.selectList(
+                new LambdaQueryWrapper<OrderInfo>().orderByDesc(OrderInfo::getId).last("limit 10"));
+
+        // 热销商品Top10
+        List<Product> hotProducts = productMapper.selectList(
+                new LambdaQueryWrapper<Product>().eq(Product::getStatus, 1)
+                        .orderByDesc(Product::getSales).last("limit 10"));
+
         return new DashboardStatsVO(
                 userCount == null ? 0L : userCount,
                 productCount == null ? 0L : productCount,
                 orderCount == null ? 0L : orderCount,
                 todayOrderCount == null ? 0L : todayOrderCount,
                 totalSales == null ? BigDecimal.ZERO : totalSales,
-                todaySales == null ? BigDecimal.ZERO : todaySales
+                todaySales == null ? BigDecimal.ZERO : todaySales,
+                recentOrders,
+                hotProducts
         );
     }
 }

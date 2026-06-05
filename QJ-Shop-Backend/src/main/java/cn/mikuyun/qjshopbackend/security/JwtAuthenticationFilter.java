@@ -40,13 +40,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Claims claims = jwtTokenUtil.parseToken(token);
             String username = claims.get("username", String.class);
             Integer role = claims.get("role", Integer.class);
+            Long userId = claims.get("userId", Long.class);
             String roleName = role != null && role == 1 ? "ROLE_ADMIN" : "ROLE_USER";
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    username,
+                    userId,  // principal 改为 userId
                     null,
                     List.of(new SimpleGrantedAuthority(roleName))
             );
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            authenticationToken.setDetails(username); // details 存 username 便于查询
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         } catch (Exception ignored) {
             SecurityContextHolder.clearContext();

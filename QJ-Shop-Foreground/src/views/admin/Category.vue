@@ -85,7 +85,7 @@ const loadFirst = async () => {
 
 const getChildren = (parentId) => {
   if (!childrenCache.value[parentId]) {
-    request.get(`/admin/categories/second/${parentId}`).then(res => childrenCache.value[parentId] = res || [])
+    request.get(`/api/admin/categories/second/${parentId}`).then(res => childrenCache.value[parentId] = res || [])
     return []
   }
   return childrenCache.value[parentId]

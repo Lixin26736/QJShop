@@ -16,9 +16,14 @@
     </van-swipe>
 
     <!-- 分类导航 -->
-    <van-grid :column-num="categoryCols" class="category-nav">
-      <van-grid-item v-for="item in categories" :key="item.id" :icon="item.icon" :text="item.name" @click="goToCategory(item.id)" />
-    </van-grid>
+    <div class="category-nav">
+      <div v-for="item in categories" :key="item.id" class="cate-item" @click="goToCategory(item.id)">
+        <div class="cate-icon" :style="{ background: cateColors[item.id % cateColors.length] }">
+          {{ item.name.charAt(0) }}
+        </div>
+        <div class="cate-name">{{ item.name }}</div>
+      </div>
+    </div>
 
     <!-- 热门商品 -->
     <div class="section">
@@ -75,11 +80,7 @@ const categories = ref([])
 const hotProducts = ref([])
 const newProducts = ref([])
 
-const categoryCols = computed(() => {
-  if (isMobile.value) return 4
-  if (isTablet.value) return 6
-  return 8
-})
+const cateColors = ['#667eea', '#f56c6c', '#67c23a', '#e6a23c', '#409eff', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4']
 
 const productCols = computed(() => {
   if (isMobile.value) return 2
@@ -89,7 +90,8 @@ const productCols = computed(() => {
 
 const handleSearch = () => {
   if (searchKeyword.value.trim()) {
-    router.push({ path: '/client/category', query: { keyword: searchKeyword.value } })
+    router.push({ name: 'ClientCategory', query: { keyword: searchKeyword.value } })
+    searchKeyword.value = ''
   }
 }
 
@@ -130,7 +132,12 @@ onMounted(() => {
 .banner img { width: 100%; height: 180px; object-fit: cover; }
 @media screen and (min-width: 769px) { .banner img { height: 280px; border-radius: 0 0 var(--radius-lg) var(--radius-lg); } }
 @media screen and (min-width: 1025px) { .banner img { height: 360px; } }
-.category-nav { margin: 12px auto; max-width: 1200px; background: var(--bg-card); border-radius: var(--radius); padding: 8px; }
+.category-nav { margin: 12px auto; max-width: 1200px; background: var(--bg-card); border-radius: var(--radius); padding: 16px 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; text-align: center; }
+@media screen and (max-width: 400px) { .category-nav { grid-template-columns: repeat(4, 1fr); } }
+.cate-item { cursor: pointer; transition: transform 0.15s; }
+.cate-item:active { transform: scale(0.95); }
+.cate-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; font-weight: 700; margin: 0 auto 6px; }
+.cate-name { font-size: 12px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .section { margin: 16px auto; max-width: 1200px; background: var(--bg-card); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); }
 .section-title { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
 .section-title::before { content: ''; width: 4px; height: 20px; background: var(--primary); border-radius: 2px; }

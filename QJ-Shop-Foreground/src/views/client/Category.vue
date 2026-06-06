@@ -1,8 +1,8 @@
 <template>
   <div class="category">
-    <van-nav-bar title="商品分类" />
+    <van-nav-bar :title="isSearchMode ? `搜索: ${route.query.keyword}` : '商品分类'" />
 
-    <div class="category-container">
+    <div class="category-container" v-if="!isSearchMode">
       <!-- 一级分类侧边栏 -->
       <van-sidebar v-model="activeFirstCategory" @change="onFirstCategoryChange">
         <van-sidebar-item v-for="item in firstCategories" :key="item.id" :title="item.name" />
@@ -40,7 +40,27 @@
         </div>
       </div>
     </div>
+    <div v-else class="product-list-only">
+    <div v-if="loading" style="text-align:center;padding:30px"><van-loading /></div>
+    <div v-else-if="products.length === 0" class="empty-tip">
+      <van-empty description="未找到相关商品" />
+    </div>
+    <div v-else class="product-grid">
+      <div v-for="product in products" :key="product.id" class="product-card" @click="goToProduct(product.id)">
+        <div class="card-img-wrap">
+          <img :src="getImageUrl(product.mainImage) || getPlaceholder(product.name, product.id, 200, 200)" :alt="product.name" loading="lazy" @error="e => e.target.src = getPlaceholder(product.name, product.id, 200, 200)" />
+        </div>
+        <div class="card-info">
+          <div class="card-name">{{ product.name }}</div>
+          <div class="card-price-row">
+            <span class="card-price">¥{{ product.price }}</span>
+            <span class="card-sales" v-if="product.sales">已售{{ product.sales }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 </template>
 
 <script setup>
@@ -61,27 +81,40 @@ const firstCategories = ref([])
 const secondCategories = ref([])
 const products = ref([])
 const loading = ref(false)
+const isSearchMode = ref(false)
 
 // 加载一级分类
 const loadFirstCategories = async () => {
   try {
     const res = await request.get('/api/admin/categories/first')
-    console.log('一级分类数据:', res)
     firstCategories.value = res?.records || res || []
+    // 处理搜索关键词
+    const queryKeyword = route.query.keyword
+    if (queryKeyword) {
+      isSearchMode.value = true
+      searchProducts(queryKeyword)
+      return
+    }
     if (firstCategories.value.length > 0) {
       const queryId = route.query.id
       if (queryId) {
-        // 查找对应的一级分类
         const index = firstCategories.value.findIndex(c => c.id === Number(queryId))
-        if (index > -1) {
-          activeFirstCategory.value = index
-        }
+        if (index > -1) activeFirstCategory.value = index
       }
       loadSecondCategories(firstCategories.value[activeFirstCategory.value].id)
     }
   } catch (error) {
     console.error('加载一级分类失败:', error)
   }
+}
+
+const searchProducts = async (keyword) => {
+  loading.value = true
+  try {
+    const res = await request.get('/api/products/search', { params: { keyword, pageNum: 1, pageSize: 100 } })
+    products.value = res?.records || []
+  } catch (e) { console.error('搜索失败:', e) }
+  finally { loading.value = false }
 }
 
 // 加载二级分类
@@ -155,6 +188,7 @@ onMounted(() => {
 <style scoped>
 .category { background: var(--bg); min-height: 100vh; }
 .category-container { display: flex; height: calc(100vh - 46px); }
+.product-list-only { flex: 1; overflow-y: auto; padding: 10px; background: var(--bg); min-height: calc(100vh - 46px); }
 .content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 .second-category-tabs { background: var(--bg-card); border-bottom: 1px solid var(--border); }
 .product-list { flex: 1; overflow-y: auto; padding: 8px; background: var(--bg); }

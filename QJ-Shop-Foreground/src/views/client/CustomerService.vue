@@ -91,10 +91,15 @@ const sendMessage = async () => {
 
   try {
     const res = await csApi.sendMessage(text)
-    // 添加AI回复
+    // 添加AI回复（清理Markdown符号）
+    let cleanReply = (res.reply || '已收到您的消息')
+      .replace(/[*#_`~>-]/g, '')
+      .replace(/\[RECOMMEND\].*?\[\/RECOMMEND\]/g, '')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim()
     const aiMsg = {
       id: Date.now() + 1,
-      content: res.reply || '已收到您的消息',
+      content: cleanReply,
       senderType: 1,
       createTime: new Date().toISOString(),
       products: res.products || []

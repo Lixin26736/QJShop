@@ -36,6 +36,9 @@ public class DeepSeekService {
             StringBuilder systemPrompt = new StringBuilder();
             systemPrompt.append("你是QJ商城的AI客服助手，名字叫\"小Q\"。你需要用中文回复用户。\n");
             systemPrompt.append("你的职责：解答购物问题、推荐商品、提供订单帮助。\n");
+            systemPrompt.append("【风格要求】回复必须自然口语化，像真人客服聊天。\n");
+            systemPrompt.append("禁止使用以下符号：* - # ` ``` ~~ ** __ 以及任何Markdown格式。\n");
+            systemPrompt.append("不要使用列表序号1. 2. 3.，用换行分段即可。商品信息用【】包裹。\n");
 
             if (recommendProducts != null && !recommendProducts.isEmpty()) {
                 systemPrompt.append("\n以下是可以推荐给用户的商品（已上架有库存）：\n");
@@ -47,8 +50,8 @@ public class DeepSeekService {
                 }
                 systemPrompt.append("\n【重要规则】你必须根据用户的需求从上述列表中挑选1-3个最相关的商品进行推荐。");
                 systemPrompt.append("用户说的可能是泛指(如\"饮料\"\"手机\")，你要智能匹配相关商品。");
-                systemPrompt.append("你的回复必须包含 [RECOMMEND]商品ID[/RECOMMEND] 标记，多个ID用逗号分隔，最多3个。");
-                systemPrompt.append("示例回复：\"为您推荐以下饮料：\\n元气森林气泡水清爽解腻¥59.90\\n智利车厘子清甜可口¥199.00 [RECOMMEND]108,106[/RECOMMEND]\"\n");
+                systemPrompt.append("你的回复末尾必须包含 [RECOMMEND]商品ID[/RECOMMEND] 标记，多个ID逗号分隔，最多3个。");
+                systemPrompt.append("示例回复：\"为您推荐以下饮料~\\n【元气森林气泡水】清爽解腻 ¥59.90\\n【智利进口车厘子】JJ级 ¥199.00 [RECOMMEND]108,106[/RECOMMEND]\"\n");
             }
 
             // 构建消息列表

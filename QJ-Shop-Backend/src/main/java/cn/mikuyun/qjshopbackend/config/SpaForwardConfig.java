@@ -16,14 +16,14 @@ public class SpaForwardConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        // 将前端路由路径转发到 index.html (Vue Router history mode)
-        registry.addViewController("/admin/{path:[^\\.]*}").setViewName("forward:/index.html");
-        registry.addViewController("/client/{path:[^\\.]*}").setViewName("forward:/index.html");
+        // SPA路由回退: 非API路径全部返回index.html
+        registry.addViewController("/admin").setViewName("forward:/index.html");
+        registry.addViewController("/admin/").setViewName("forward:/index.html");
+        registry.addViewController("/client").setViewName("forward:/index.html");
+        registry.addViewController("/client/").setViewName("forward:/index.html");
         registry.addViewController("/login").setViewName("forward:/index.html");
         registry.addViewController("/register").setViewName("forward:/index.html");
         registry.addViewController("/admin/login").setViewName("forward:/index.html");
-        registry.addViewController("/admin/{path1}/{path2:[^\\.]*}").setViewName("forward:/index.html");
-        registry.addViewController("/client/{path1}/{path2:[^\\.]*}").setViewName("forward:/index.html");
     }
 
     @Bean

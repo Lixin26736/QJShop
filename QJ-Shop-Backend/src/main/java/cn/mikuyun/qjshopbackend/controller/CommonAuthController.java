@@ -71,7 +71,7 @@ public class CommonAuthController {
         // 创建新用户
         User user = new User();
         user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
         user.setNickname(nickname != null ? nickname : username);
         user.setPhone(phone);
         user.setRole(0); // 普通用户

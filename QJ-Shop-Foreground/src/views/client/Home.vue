@@ -18,8 +18,9 @@
     <!-- 分类导航 -->
     <div class="category-nav">
       <div v-for="item in categories" :key="item.id" class="cate-item" @click="goToCategory(item.id)">
-        <div class="cate-icon" :style="{ background: cateColors[item.id % cateColors.length] }">
-          {{ item.name.charAt(0) }}
+        <div class="cate-icon">
+          <img v-if="item.icon" :src="item.icon" :alt="item.name" @error="e => e.target.style.display='none'" />
+          <span v-else class="cate-letter" :style="{ background: cateColors[item.id % cateColors.length] }">{{ item.name.charAt(0) }}</span>
         </div>
         <div class="cate-name">{{ item.name }}</div>
       </div>
@@ -136,7 +137,9 @@ onMounted(() => {
 @media screen and (max-width: 400px) { .category-nav { grid-template-columns: repeat(4, 1fr); } }
 .cate-item { cursor: pointer; transition: transform 0.15s; }
 .cate-item:active { transform: scale(0.95); }
-.cate-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; font-weight: 700; margin: 0 auto 6px; }
+.cate-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; overflow: hidden; }
+.cate-icon img { width: 100%; height: 100%; object-fit: cover; }
+.cate-letter { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; font-weight: 700; }
 .cate-name { font-size: 12px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .section { margin: 16px auto; max-width: 1200px; background: var(--bg-card); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); }
 .section-title { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); }

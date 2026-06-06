@@ -7,15 +7,11 @@
       <van-cell title="头像" center>
         <template #right-icon>
           <div class="avatar-upload">
-            <img :src="form.avatar || 'https://via.placeholder.com/60'" alt="头像" class="avatar-preview" />
-            <input
-              type="file"
-              accept="image/*"
-              @change="handleAvatarChange"
-              ref="avatarInput"
-              style="display: none"
-            />
-            <van-button size="small" @click="triggerAvatarUpload">更换</van-button>
+            <img :src="form.avatar || usePlaceholder" alt="头像" class="avatar-preview" />
+            <input type="file" accept="image/*" @change="handleAvatarChange" ref="avatarInput" style="display:none" />
+            <input type="file" accept="image/*" capture="camera" @change="handleAvatarChange" ref="cameraInput" style="display:none" />
+            <van-button size="small" plain @click="triggerAvatarUpload">相册</van-button>
+            <van-button size="small" plain type="primary" @click="triggerCamera">拍照</van-button>
           </div>
         </template>
       </van-cell>
@@ -87,6 +83,8 @@ import request from '@/utils/request'
 const router = useRouter()
 const userStore = useUserStore()
 const avatarInput = ref(null)
+const cameraInput = ref(null)
+const usePlaceholder = 'https://via.placeholder.com/60'
 
 const loading = ref(false)
 const showGenderPicker = ref(false)
@@ -142,9 +140,8 @@ const loadUserInfo = async () => {
 }
 
 // 触发头像上传
-const triggerAvatarUpload = () => {
-  avatarInput.value?.click()
-}
+const triggerAvatarUpload = () => { avatarInput.value?.click() }
+const triggerCamera = () => { cameraInput.value?.click() }
 
 // 处理头像变更
 const handleAvatarChange = (event) => {

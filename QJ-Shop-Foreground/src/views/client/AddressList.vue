@@ -22,6 +22,9 @@
       <div class="address-form">
         <h3>{{ isEdit ? '编辑地址' : '添加地址' }}</h3>
         <van-form @submit="handleSave">
+          <van-cell-group inset style="margin-bottom:10px">
+            <van-cell title="快速获取位置" value="GPS定位" is-link @click="getLocation" />
+          </van-cell-group>
           <van-cell-group inset>
             <van-field v-model="form.receiverName" label="收货人" placeholder="请输入收货人姓名" required />
             <van-field v-model="form.receiverPhone" label="手机号" placeholder="请输入手机号" required type="tel" />
@@ -73,13 +76,15 @@ const loadAddresses = async () => {
   } catch (e) { /* ignore */ }
 }
 
+const locating = ref(false)
+
 const showEdit = (id) => {
   if (id) {
-    const addr = addresses.value.find(a => a.id === id)
+    const addr = addresses.value.find(a => a.id == id)
     if (addr) {
       form.value = { ...addr }
       isEdit.value = true
-      currentEditId.value = id
+      currentEditId.value = addr.id
     }
   } else {
     form.value = { receiverName: '', receiverPhone: '', province: '', city: '', district: '', detailAddress: '', isDefault: 0 }
@@ -87,6 +92,24 @@ const showEdit = (id) => {
     currentEditId.value = null
   }
   showPopup.value = true
+}
+
+const getLocation = () => {
+  if (!navigator.geolocation) { showToast('浏览器不支持定位'); return }
+  locating.value = true
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    try {
+      const { latitude, longitude } = pos.coords
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=zh`)
+      const data = await res.json()
+      const addr = data.address || {}
+      form.value.province = addr.province || addr.state || ''
+      form.value.city = addr.city || addr.county || ''
+      form.value.district = addr.district || addr.town || ''
+      showToast('已获取位置')
+    } catch (e) { showToast('位置解析失败') }
+    finally { locating.value = false }
+  }, () => { showToast('定位失败'); locating.value = false })
 }
 
 const handleSave = async () => {

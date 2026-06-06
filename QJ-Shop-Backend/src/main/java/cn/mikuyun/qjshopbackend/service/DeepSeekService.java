@@ -38,20 +38,17 @@ public class DeepSeekService {
             systemPrompt.append("你的职责：解答购物问题、推荐商品、提供订单帮助。\n");
 
             if (recommendProducts != null && !recommendProducts.isEmpty()) {
-                systemPrompt.append("\n以下是可以推荐给用户的商品（来自数据库，已上架且有库存）：\n");
+                systemPrompt.append("\n以下是可以推荐给用户的商品（已上架有库存）：\n");
                 for (int i = 0; i < Math.min(recommendProducts.size(), 10); i++) {
                     Product p = recommendProducts.get(i);
-                    systemPrompt.append(String.format("- ID:%d, 名称:%s, 价格:¥%s",
-                            p.getId(), p.getName(), p.getPrice()));
-                    if (p.getSubtitle() != null && !p.getSubtitle().isEmpty()) {
-                        systemPrompt.append(", 描述:").append(p.getSubtitle());
-                    }
-                    systemPrompt.append("\n");
+                    systemPrompt.append(String.format("- ID:%d, 名称:%s, 价格:¥%s, 描述:%s\n",
+                            p.getId(), p.getName(), p.getPrice(),
+                            p.getSubtitle() != null ? p.getSubtitle() : ""));
                 }
-                systemPrompt.append("\n如果用户询问商品相关问题，请推荐上述匹配的商品。回复格式要求：\n");
-                systemPrompt.append("1. 先给出自然友好的文字回复\n");
-                systemPrompt.append("2. 如果需要推荐商品，在回复末尾添加 [RECOMMEND]商品ID列表[/RECOMMEND] 标记\n");
-                systemPrompt.append("3. 例如：[RECOMMEND]101,102,103[/RECOMMEND]\n");
+                systemPrompt.append("\n【重要规则】你必须根据用户的需求从上述列表中挑选1-3个最相关的商品进行推荐。");
+                systemPrompt.append("用户说的可能是泛指(如\"饮料\"\"手机\")，你要智能匹配相关商品。");
+                systemPrompt.append("你的回复必须包含 [RECOMMEND]商品ID[/RECOMMEND] 标记，多个ID用逗号分隔，最多3个。");
+                systemPrompt.append("示例回复：\"为您推荐以下饮料：\\n元气森林气泡水清爽解腻¥59.90\\n智利车厘子清甜可口¥199.00 [RECOMMEND]108,106[/RECOMMEND]\"\n");
             }
 
             // 构建消息列表
@@ -115,9 +112,11 @@ public class DeepSeekService {
                         }
                     }
 
-                    // 组装推荐商品详情
+                    // 组装推荐商品详情(最多3个)
                     List<Map<String, Object>> productCards = new ArrayList<>();
+                    int recCount = 0;
                     for (Long id : recommendedIds) {
+                        if (recCount >= 3) break;
                         for (Product p : recommendProducts) {
                             if (p.getId().equals(id)) {
                                 Map<String, Object> card = new LinkedHashMap<>();
@@ -128,6 +127,7 @@ public class DeepSeekService {
                                 card.put("subtitle", p.getSubtitle());
                                 card.put("link", "/client/product/" + p.getId());
                                 productCards.add(card);
+                                recCount++;
                                 break;
                             }
                         }

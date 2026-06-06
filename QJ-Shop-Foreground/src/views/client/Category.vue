@@ -19,20 +19,24 @@
 
         <!-- 商品列表 -->
         <div class="product-list">
-          <div v-if="products.length === 0" class="empty-tip">
+          <div v-if="loading" style="text-align:center;padding:30px"><van-loading /></div>
+          <div v-else-if="products.length === 0" class="empty-tip">
             <van-empty description="暂无商品" />
           </div>
-          <van-grid v-else :column-num="2" :gutter="10">
-            <van-grid-item v-for="product in products" :key="product.id">
-              <div class="product-card" @click="goToProduct(product.id)">
-                <img :src="getImageUrl(product.mainImage) || getPlaceholder(product.name, product.id, 150, 150)" :alt="product.name" loading="lazy" @error="e => e.target.src = getPlaceholder(product.name, product.id, 150, 150)" />
-                <div class="product-info">
-                  <div class="product-name">{{ product.name }}</div>
-                  <div class="product-price">¥{{ product.price }}</div>
+          <div v-else class="product-grid">
+            <div v-for="product in products" :key="product.id" class="product-card" @click="goToProduct(product.id)">
+              <div class="card-img-wrap">
+                <img :src="getImageUrl(product.mainImage) || getPlaceholder(product.name, product.id, 200, 200)" :alt="product.name" loading="lazy" @error="e => e.target.src = getPlaceholder(product.name, product.id, 200, 200)" />
+              </div>
+              <div class="card-info">
+                <div class="card-name">{{ product.name }}</div>
+                <div class="card-price-row">
+                  <span class="card-price">¥{{ product.price }}</span>
+                  <span class="card-sales" v-if="product.sales">已售{{ product.sales }}</span>
                 </div>
               </div>
-            </van-grid-item>
-          </van-grid>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -45,14 +49,18 @@ import { useRouter, useRoute } from 'vue-router'
 import request from '@/utils/request'
 import { getImageUrl, getPlaceholder } from '@/utils/image'
 
+import { useResponsive } from '@/utils/responsive'
+
 const router = useRouter()
 const route = useRoute()
+const { isMobile, isTablet } = useResponsive()
 
 const activeFirstCategory = ref(0)
 const activeSecondCategory = ref(0)
 const firstCategories = ref([])
 const secondCategories = ref([])
 const products = ref([])
+const loading = ref(false)
 
 // 加载一级分类
 const loadFirstCategories = async () => {
@@ -145,68 +153,39 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.category {
-  background: #f7f8fa;
-  min-height: 100vh;
-}
+.category { background: var(--bg); min-height: 100vh; }
+.category-container { display: flex; height: calc(100vh - 46px); }
+.content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.second-category-tabs { background: var(--bg-card); border-bottom: 1px solid var(--border); }
+.product-list { flex: 1; overflow-y: auto; padding: 8px; background: var(--bg); }
+.empty-tip { display: flex; align-items: center; justify-content: center; height: 100%; }
 
-.category-container {
-  display: flex;
-  height: calc(100vh - 96px);
+/* 响应式商品网格: 3~5列 */
+.product-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
 }
-
-.content-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+@media screen and (min-width: 500px) {
+  .product-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
 }
-
-.second-category-tabs {
-  background: #fff;
-  border-bottom: 1px solid #eee;
-}
-
-.product-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px;
-  background: #fff;
-}
-
-.empty-tip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+@media screen and (min-width: 900px) {
+  .product-grid { grid-template-columns: repeat(5, 1fr); gap: 12px; }
 }
 
 .product-card {
   cursor: pointer;
-}
-
-.product-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-.product-info {
-  padding: 5px;
-}
-
-.product-name {
-  font-size: 14px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  transition: transform 0.15s;
 }
-
-.product-price {
-  color: #ff5722;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 5px;
-}
+.product-card:active { transform: scale(0.97); }
+.card-img-wrap { width: 100%; aspect-ratio: 1; overflow: hidden; background: #f1f5f9; }
+.card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-info { padding: 8px; }
+.card-name { font-size: 12px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; margin-bottom: 4px; }
+.card-price-row { display: flex; align-items: baseline; justify-content: space-between; }
+.card-price { color: var(--danger); font-size: 14px; font-weight: 700; }
+.card-sales { font-size: 10px; color: var(--text-secondary); }
 </style>

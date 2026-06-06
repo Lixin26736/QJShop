@@ -2,7 +2,7 @@
   <div class="order-list">
     <van-nav-bar title="我的订单" left-arrow @click-left="$router.back()" />
 
-    <van-tabs v-model:active="activeTab" @change="loadOrders">
+    <van-tabs v-model:active="activeTab" @change="onTabChange">
       <van-tab title="全部" :name="-1" />
       <van-tab title="待付款" :name="0" />
       <van-tab title="待发货" :name="1" />
@@ -13,8 +13,7 @@
     <div class="order-content">
       <van-empty v-if="orders.length === 0 && !loading" description="暂无订单" />
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="loadOrders">
-          <div v-for="order in orders" :key="order.id" class="order-card" @click="goDetail(order.id)">
+        <div v-for="order in orders" :key="order.id" class="order-card" @click="goDetail(order.id)">
             <div class="order-header">
               <span class="order-no">订单号: {{ order.orderNo }}</span>
               <van-tag :type="statusType(order.status)">{{ statusText(order.status) }}</van-tag>
@@ -30,14 +29,13 @@
               <van-button size="small" type="primary" v-if="order.status === 2" @click="handleConfirm(order.id)">确认收货</van-button>
             </div>
           </div>
-        </van-list>
       </van-pull-refresh>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { orderApi } from '@/api/order'
 import { showToast, showConfirmDialog } from 'vant'
@@ -50,18 +48,23 @@ const refreshing = ref(false)
 const activeTab = ref(-1)
 let pageNum = 1
 
+const resetAndLoad = () => {
+  pageNum = 1
+  orders.value = []
+  finished.value = false
+  loadOrders()
+}
+
+const onTabChange = () => { resetAndLoad() }
+
 const loadOrders = async () => {
-  if (refreshing.value) {
-    pageNum = 1
-    finished.value = false
-  }
   loading.value = true
   try {
     const params = { pageNum, pageSize: 10 }
     if (activeTab.value !== -1) params.status = activeTab.value
     const res = await orderApi.getOrderList(params)
     const records = res?.records || []
-    if (refreshing.value) {
+    if (pageNum === 1) {
       orders.value = records
     } else {
       orders.value.push(...records)
@@ -78,8 +81,7 @@ const loadOrders = async () => {
 
 const onRefresh = () => {
   refreshing.value = true
-  pageNum = 1
-  loadOrders()
+  resetAndLoad()
 }
 
 const goDetail = (id) => {
@@ -112,6 +114,8 @@ const handleConfirm = (id) => {
 
 const statusType = (s) => ({ 0: 'info', 1: 'warning', 2: 'success', 3: 'success', 4: 'danger' }[s] || 'info')
 const statusText = (s) => ({ 0: '待付款', 1: '待发货', 2: '待收货', 3: '已完成', 4: '已取消' }[s] || '未知')
+
+onMounted(() => { loadOrders() })
 
 const formatDate = (d) => {
   if (!d) return ''

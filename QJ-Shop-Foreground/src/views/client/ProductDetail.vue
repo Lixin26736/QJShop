@@ -229,7 +229,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.product-detail { background: #f7f8fa; min-height: 100vh; padding-bottom: 50px; }
+.product-detail { background: var(--bg); min-height: 100vh; padding-bottom: 80px; }
 .product-swipe img { width: 100%; height: 375px; object-fit: cover; }
 .product-info { background: #fff; padding: 15px; }
 .product-name { font-size: 18px; font-weight: bold; }

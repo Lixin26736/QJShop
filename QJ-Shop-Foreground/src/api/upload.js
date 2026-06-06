@@ -8,14 +8,9 @@ export const uploadApi = {
   uploadImage(file) {
     const formData = new FormData()
     formData.append('file', file)
-    // 直接使用axios发送multipart请求
     const token = localStorage.getItem('token')
-    return axios.post('/api/upload/image', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-      }
-    }).then(res => {
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {}
+    return axios.post('/api/upload/image', formData, { headers }).then(res => {
       if (res.data.code === 200) return res.data.data
       throw new Error(res.data.message || '上传失败')
     })
@@ -26,12 +21,8 @@ export const uploadApi = {
     const formData = new FormData()
     files.forEach(file => formData.append('files', file))
     const token = localStorage.getItem('token')
-    return axios.post('/api/upload/images', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-      }
-    }).then(res => {
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {}
+    return axios.post('/api/upload/images', formData, { headers }).then(res => {
       if (res.data.code === 200) return res.data.data
       throw new Error(res.data.message || '上传失败')
     })

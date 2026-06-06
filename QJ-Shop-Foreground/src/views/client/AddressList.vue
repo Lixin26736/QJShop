@@ -3,9 +3,7 @@
     <van-nav-bar title="收货地址" left-arrow @click-left="$router.back()" />
 
     <div class="address-content">
-      <van-empty v-if="addresses.length === 0" description="暂无地址" />
       <van-address-list
-        v-else
         v-model="defaultId"
         :list="addressList"
         default-tag-text="默认"
@@ -13,8 +11,9 @@
         @edit="(item) => showEdit(item.id)"
         @select="(item) => handleSelect(item)"
       />
-      <div v-if="addresses.length > 0" class="add-btn">
-        <van-button type="primary" block @click="showEdit(null)">添加新地址</van-button>
+      <div v-if="addresses.length === 0" class="empty-wrap">
+        <van-empty description="暂无收货地址" />
+        <van-button type="primary" round block @click="showEdit(null)">添加新地址</van-button>
       </div>
     </div>
 
@@ -121,9 +120,9 @@ onMounted(() => { loadAddresses() })
 </script>
 
 <style scoped>
-.address-list { background: #f7f8fa; min-height: 100vh; }
-.address-content { padding: 10px; }
-.add-btn { margin-top: 20px; }
+.address-list { background: var(--bg); min-height: 100vh; }
+.address-content { padding-bottom: 20px; }
+.empty-wrap { padding: 20px; text-align: center; }
 .address-form { padding: 20px; }
 .address-form h3 { text-align: center; margin-bottom: 20px; }
 .form-actions { margin-top: 20px; padding: 0 16px; }

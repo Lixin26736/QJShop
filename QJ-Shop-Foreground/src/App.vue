@@ -42,4 +42,16 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* 移动端管理后台表格优化 */
+@media screen and (max-width: 768px) {
+  .el-table { font-size: 12px !important; }
+  .el-table .cell { padding: 6px 4px !important; }
+  .el-table .el-button--small { padding: 4px 8px !important; font-size: 11px !important; }
+  .el-form--inline .el-form-item { margin-right: 8px !important; margin-bottom: 4px !important; }
+  .el-pagination { justify-content: center !important; font-size: 12px !important; }
+  .el-pagination button, .el-pagination .el-pager li { min-width: 24px !important; height: 24px !important; }
+  .el-dialog { width: 92% !important; }
+  .el-drawer { width: 220px !important; }
+}
 </style>

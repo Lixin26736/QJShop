@@ -5,8 +5,9 @@
       v-if="isMobile"
       v-model="drawerVisible"
       direction="ltr"
-      :size="200"
+      :size="220"
       title="QJ商城管理后台"
+      :with-header="true"
     >
       <el-menu
         :default-active="activeMenu"
@@ -184,7 +185,7 @@ const handleMenuSelect = () => {
 }
 
 const goToProfile = () => {
-  router.push('/client/profile')
+  router.push('/admin/settings')
 }
 
 const handleLogout = () => {
@@ -284,8 +285,10 @@ const handleLogout = () => {
 }
 
 @media screen and (max-width: 768px) {
-  .el-header {
-    padding: 0 10px;
-  }
+  .el-header { padding: 0 8px !important; }
+  .header-content { gap: 4px; }
+  .user-info .el-dropdown-link span { display: none; }
+  .breadcrumb { font-size: 12px; }
+  .el-main { padding: 10px !important; }
 }
 </style>

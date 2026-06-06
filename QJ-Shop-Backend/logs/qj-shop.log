@@ -1822,3 +1822,64 @@ Unconditional classes:
 2026-06-06 22:25:16.269 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 86 class path changes (86 additions, 0 deletions, 0 modifications)
 2026-06-06 22:25:16.278 [Thread-7] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-2} closing ...
 2026-06-06 22:25:16.278 [Thread-7] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-2} closed
+2026-06-06 22:25:16.352 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - Starting QjShopBackendApplication using Java 17.0.14 with PID 15368 (D:\QJShop\QJ-Shop-Backend\target\classes started by Miku in D:\QJShop\QJ-Shop-Backend)
+2026-06-06 22:25:16.352 [restartedMain] DEBUG cn.mikuyun.qjshopbackend.QjShopBackendApplication - Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-06-06 22:25:16.352 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-06-06 22:25:17.036 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-06-06 22:25:17.037 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-06-06 22:25:17.037 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-06-06 22:25:17.060 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-06-06 22:25:17.060 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 706 ms
+2026-06-06 22:25:17.106 [restartedMain] DEBUG c.m.qjshopbackend.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-06-06 22:25:17.160 [restartedMain] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2026-06-06 22:25:17.389 [restartedMain] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-3} inited
+2026-06-06 22:25:17.458 [restartedMain] DEBUG c.b.m.e.spring.MybatisSqlSessionFactoryBean - Registered plugin: 'com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor@7df875eb'
+2026-06-06 22:25:17.458 [restartedMain] DEBUG c.b.m.e.spring.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was not specified.
+2026-06-06 22:25:17.769 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 5b6883ec-82cd-4021-9a6a-a43e49062eb6
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-06-06 22:25:17.781 [restartedMain] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2026-06-06 22:25:17.941 [restartedMain] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@9bbc3eb, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@783eb2cc, org.springframework.security.web.context.SecurityContextHolderFilter@26e7fe31, org.springframework.security.web.header.HeaderWriterFilter@5a39f2e5, org.springframework.web.filter.CorsFilter@16e4fa81, org.springframework.security.web.authentication.logout.LogoutFilter@5454a414, cn.mikuyun.qjshopbackend.security.JwtAuthenticationFilter@37baadca, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1cc7adc1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@9fcda66, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@68651443, org.springframework.security.web.session.SessionManagementFilter@2ecd55c4, org.springframework.security.web.access.ExceptionTranslationFilter@103555f1, org.springframework.security.web.access.intercept.AuthorizationFilter@1a9c69cd]
+2026-06-06 22:25:18.074 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-06-06 22:25:18.111 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-06-06 22:25:18.117 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - Started QjShopBackendApplication in 1.794 seconds (process running for 1459.037)
+2026-06-06 22:25:18.117 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL start create  ...  
+2026-06-06 22:25:18.117 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL end create  ...  
+2026-06-06 22:25:18.118 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+    None
+
+
+Negative matches:
+-----------------
+
+   SpringBootWebSecurityConfiguration.SecurityFilterChainConfiguration:
+      Did not match:
+         - AllNestedConditions 1 matched 1 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) found beans of type 'org.springframework.security.web.SecurityFilterChain' securityFilterChain; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity' (DefaultWebSecurityCondition)
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+

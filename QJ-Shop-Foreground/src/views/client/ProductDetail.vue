@@ -63,13 +63,13 @@
     </div>
 
     <!-- 底部操作栏 -->
-    <van-goods-action>
-      <van-goods-action-icon icon="chat-o" text="客服" @click="goToCS" />
-      <van-goods-action-icon icon="star-o" text="收藏" @click="toggleFavorite" :color="isFavorited ? '#ff5722' : ''" />
-      <van-goods-action-icon icon="cart-o" text="购物车" @click="$router.push('/client/cart')" :badge="cartCount" />
-      <van-goods-action-button type="warning" text="加入购物车" @click="addToCart" />
-      <van-goods-action-button type="danger" text="立即购买" @click="buyNow" />
-    </van-goods-action>
+    <van-action-bar>
+      <van-action-bar-icon icon="chat-o" text="客服" @click="goToCS" />
+      <van-action-bar-icon icon="star-o" text="收藏" @click="toggleFavorite" :color="isFavorited ? '#ff5722' : ''" />
+      <van-action-bar-icon icon="cart-o" text="购物车" @click="$router.push('/client/cart')" :badge="cartCount" />
+      <van-action-bar-button type="warning" text="加入购物车" @click="addToCart" />
+      <van-action-bar-button type="danger" text="立即购买" @click="buyNow" />
+    </van-action-bar>
 
     <!-- 规格选择弹窗 -->
     <van-popup v-model:show="showSpec" position="bottom" round>

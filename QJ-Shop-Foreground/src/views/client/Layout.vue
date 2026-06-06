@@ -3,15 +3,27 @@
     <!-- PC端顶部导航 -->
     <header v-if="!isMobile" class="client-header">
       <div class="header-container">
-        <div class="logo">QJ商城</div>
+        <router-link to="/client/home" class="logo">
+          <span class="logo-icon">QJ</span>
+          <span class="logo-text">QJ商城</span>
+        </router-link>
         <nav class="nav-menu">
-          <router-link to="/client/home" class="nav-item" :class="{ active: $route.path === '/client/home' }">首页</router-link>
-          <router-link to="/client/category" class="nav-item" :class="{ active: $route.path === '/client/category' }">分类</router-link>
+          <router-link to="/client/home" class="nav-item" :class="{ active: $route.path === '/client/home' }">
+            <span class="nav-icon">🏠</span> 首页
+          </router-link>
+          <router-link to="/client/category" class="nav-item" :class="{ active: $route.path === '/client/category' }">
+            <span class="nav-icon">📂</span> 分类
+          </router-link>
           <router-link to="/client/cart" class="nav-item" :class="{ active: $route.path === '/client/cart' }">
-            购物车
+            <span class="nav-icon">🛒</span> 购物车
             <span v-if="cartCount" class="badge">{{ cartCount }}</span>
           </router-link>
-          <router-link to="/client/profile" class="nav-item" :class="{ active: $route.path === '/client/profile' }">我的</router-link>
+          <router-link to="/client/cs" class="nav-item">
+            <span class="nav-icon">💬</span> 客服
+          </router-link>
+          <router-link to="/client/profile" class="nav-item" :class="{ active: $route.path === '/client/profile' }">
+            <span class="nav-icon">👤</span> 我的
+          </router-link>
         </nav>
       </div>
     </header>
@@ -52,8 +64,7 @@ const cartCount = computed(() => cartStore.cartCount)
 }
 
 .client-header {
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -63,61 +74,57 @@ const cartCount = computed(() => cartStore.cartCount)
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-  height: 60px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #1989fa;
-}
-
-.nav-menu {
+  text-decoration: none;
   display: flex;
-  gap: 30px;
+  align-items: center;
+  gap: 10px;
 }
+.logo-icon {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  width: 40px; height: 40px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 16px;
+}
+.logo-text { color: #fff; font-size: 20px; font-weight: 700; letter-spacing: 1px; }
 
+.nav-menu { display: flex; gap: 8px; }
 .nav-item {
   text-decoration: none;
-  color: #333;
-  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  transition: all 0.2s;
   position: relative;
-  padding: 8px 0;
-  transition: color 0.3s;
+  display: flex; align-items: center; gap: 4px;
 }
-
-.nav-item:hover,
-.nav-item.active {
-  color: #1989fa;
-}
-
+.nav-icon { font-size: 16px; }
+.nav-item:hover, .nav-item.active { color: #fff; background: rgba(255,255,255,0.15); }
 .nav-item .badge {
   position: absolute;
-  top: 0;
-  right: -10px;
-  background: #ff5722;
+  top: 2px; right: 4px;
+  background: var(--danger);
   color: #fff;
-  font-size: 12px;
-  padding: 2px 6px;
+  font-size: 11px;
+  padding: 1px 6px;
   border-radius: 10px;
   min-width: 18px;
   text-align: center;
 }
 
-.client-main {
-  flex: 1;
-}
-
-.client-main.with-header {
-  padding-top: 0;
-}
+.client-main { flex: 1; }
+.client-main.with-header { padding-top: 0; }
 
 @media screen and (max-width: 768px) {
-  .client-main {
-    padding-bottom: 50px;
-  }
+  .client-main { padding-bottom: 50px; }
 }
 </style>

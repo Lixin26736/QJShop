@@ -145,66 +145,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.dashboard {
-  padding: 20px;
-}
-
-@media screen and (max-width: 768px) {
-  .dashboard {
-    padding: 10px;
-  }
-}
-
-.stat-card {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.stat-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 30px;
-}
-
-@media screen and (max-width: 768px) {
-  .stat-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-  }
-}
-
-.stat-info {
-  flex: 1;
-}
-
-.stat-value {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-}
-
-@media screen and (max-width: 768px) {
-  .stat-value {
-    font-size: 20px;
-  }
-}
-
-.stat-label {
-  font-size: 14px;
-  color: #999;
-  margin-top: 5px;
-}
-
-@media screen and (max-width: 768px) {
-  .stat-label {
-    font-size: 12px;
-  }
-}
+.dashboard { padding: 24px; }
+@media screen and (max-width: 768px) { .dashboard { padding: 12px; } }
+.stat-card { display: flex; align-items: center; gap: 16px; padding: 4px 0; }
+.stat-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 26px; flex-shrink: 0; }
+.stat-info { flex: 1; }
+.stat-value { font-size: 26px; font-weight: 800; color: var(--text); }
+.stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
 </style>

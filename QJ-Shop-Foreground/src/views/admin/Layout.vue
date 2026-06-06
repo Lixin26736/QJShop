@@ -11,9 +11,9 @@
       <el-menu
         :default-active="activeMenu"
         router
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
+        background-color="#1e293b"
+        text-color="#cbd5e1"
+        active-text-color="#60a5fa"
         @select="handleMenuSelect"
       >
         <el-menu-item index="/admin/dashboard">
@@ -65,9 +65,9 @@
         :default-active="activeMenu"
         router
         :collapse="isCollapse"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
+        background-color="#1e293b"
+        text-color="#cbd5e1"
+        active-text-color="#60a5fa"
       >
         <el-menu-item index="/admin/dashboard">
           <el-icon><DataAnalysis /></el-icon>
@@ -208,7 +208,7 @@ const handleLogout = () => {
 }
 
 .admin-aside {
-  background-color: #545c64;
+  background-color: #1e293b;
   color: #fff;
   transition: width 0.3s;
   overflow: hidden;
@@ -219,18 +219,14 @@ const handleLogout = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #434a50;
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
 }
 
-.logo h2 {
-  font-size: 16px;
-  margin: 0;
-  color: #fff;
-}
+.logo h2 { font-size: 16px; margin: 0; color: #fff; font-weight: 700; }
 
 .el-header {
-  background-color: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  background-color: var(--bg-card);
+  box-shadow: var(--shadow-sm);
   display: flex;
   align-items: center;
   padding: 0 20px;

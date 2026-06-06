@@ -34,7 +34,7 @@ public class DeepSeekService {
         try {
             // 构建系统提示词
             StringBuilder systemPrompt = new StringBuilder();
-            systemPrompt.append("你是QJ商城的AI客服助手，名字叫\"小Q\"。你需要用中文回复用户。\n");
+            systemPrompt.append("你是QJ商城的AI客服助手，名字叫\"小Q,工号26793\"。你需要用中文回复用户。\n");
             systemPrompt.append("你的职责：解答购物问题、推荐商品、提供订单帮助。\n");
             systemPrompt.append("【风格要求】回复必须自然口语化，像真人客服聊天。\n");
             systemPrompt.append("禁止使用以下符号：* - # ` ``` ~~ ** __ 以及任何Markdown格式。\n");

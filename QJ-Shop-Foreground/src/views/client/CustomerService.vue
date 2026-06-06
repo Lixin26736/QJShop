@@ -2,10 +2,10 @@
   <div class="cs-page">
     <van-nav-bar title="AI客服小Q" left-arrow @click-left="$router.back()" fixed placeholder />
     <div class="chat-area" ref="chatArea">
-      <div v-if="messages.length === 0" class="welcome-area">
+      <div v-if="messages.length <= 1" class="welcome-area">
         <div class="welcome-avatar">🤖</div>
-        <h3>你好，我是小Q</h3>
-        <p>你的AI购物助手，可以帮你找商品、查订单、解答问题</p>
+        <h3>工号26793 小琉</h3>
+        <p>您好，请问有什么需要帮助的吗？</p>
         <div class="quick-questions">
           <div v-for="q in quickQuestions" :key="q" class="quick-chip" @click="sendQuick(q)">{{ q }}</div>
         </div>
@@ -71,9 +71,11 @@ const chatArea = ref(null)
 
 const quickQuestions = ['推荐一款手机', '有什么好用的护肤品', '最近有什么新品', '包邮吗', '如何退货']
 
-const loadMessages = async () => {
-  try { messages.value = (await csApi.getMessages()) || [] }
-  catch (e) { /* 未登录时不加载 */ }
+const welcomeMsg = { id: 0, content: '您好，工号26793小琉为您服务，请问有什么需要帮助的吗？', senderType: 1, createTime: new Date().toISOString(), products: [] }
+
+const loadMessages = () => {
+  // 每次进入清空历史，只显示欢迎语
+  messages.value = [welcomeMsg]
 }
 
 const sendQuick = (q) => { inputText.value = q; sendMessage() }

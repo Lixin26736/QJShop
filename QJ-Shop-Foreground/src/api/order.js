@@ -1,6 +1,10 @@
 import request from '@/utils/request'
 
 export const orderApi = {
+  getOrderCounts() {
+    return request.get('/api/user/orders/counts')
+  },
+
   createOrder(data) {
     return request.post('/api/user/orders', data)
   },

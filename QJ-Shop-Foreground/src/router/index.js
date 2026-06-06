@@ -52,39 +52,39 @@ const routes = [
         component: () => import('@/views/client/Profile.vue'),
         meta: { title: '个人信息', requiresAuth: true }
       },
-      {
-        path: 'orders',
-        name: 'OrderList',
-        component: () => import('@/views/client/OrderList.vue'),
-        meta: { title: '我的订单', requiresAuth: true }
-      },
-      {
-        path: 'address',
-        name: 'AddressList',
-        component: () => import('@/views/client/AddressList.vue'),
-        meta: { title: '收货地址', requiresAuth: true }
-      },
-      {
-        path: 'favorites',
-        name: 'FavoriteList',
-        component: () => import('@/views/client/FavoriteList.vue'),
-        meta: { title: '我的收藏', requiresAuth: true }
-      },
-      {
-        path: 'settings',
-        name: 'UserSettings',
-        component: () => import('@/views/client/UserSettings.vue'),
-        meta: { title: '账号设置', requiresAuth: true }
-      },
-      {
-        path: 'cs',
-        name: 'CustomerService',
-        component: () => import('@/views/client/CustomerService.vue'),
-        meta: { title: 'AI客服' }
-      }
     ]
   },
   // 独立页面(无底部导航栏)
+  {
+    path: '/client/orders',
+    name: 'OrderList',
+    component: () => import('@/views/client/OrderList.vue'),
+    meta: { title: '我的订单', requiresAuth: true }
+  },
+  {
+    path: '/client/address',
+    name: 'AddressList',
+    component: () => import('@/views/client/AddressList.vue'),
+    meta: { title: '收货地址', requiresAuth: true }
+  },
+  {
+    path: '/client/favorites',
+    name: 'FavoriteList',
+    component: () => import('@/views/client/FavoriteList.vue'),
+    meta: { title: '我的收藏', requiresAuth: true }
+  },
+  {
+    path: '/client/settings',
+    name: 'UserSettings',
+    component: () => import('@/views/client/UserSettings.vue'),
+    meta: { title: '账号设置', requiresAuth: true }
+  },
+  {
+    path: '/client/cs',
+    name: 'CustomerService',
+    component: () => import('@/views/client/CustomerService.vue'),
+    meta: { title: 'AI客服' }
+  },
   {
     path: '/client/product/:id',
     name: 'ProductDetail',

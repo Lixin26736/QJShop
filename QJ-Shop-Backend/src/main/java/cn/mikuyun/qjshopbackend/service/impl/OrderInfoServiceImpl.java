@@ -61,6 +61,14 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
+    public Long countByUserAndStatus(Long userId, Integer status) {
+        LambdaQueryWrapper<OrderInfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(OrderInfo::getUserId, userId)
+                .eq(status != null, OrderInfo::getStatus, status);
+        return orderInfoMapper.selectCount(wrapper);
+    }
+
+    @Override
     public PageResult<OrderInfo> pageByUser(int pageNum, int pageSize, Long userId, Integer status) {
         LambdaQueryWrapper<OrderInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(OrderInfo::getUserId, userId)

@@ -27,6 +27,19 @@ public class OrderController {
     private final ProductMapper productMapper;
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/counts")
+    public ApiResponse<java.util.Map<String, Long>> counts(Authentication authentication) {
+        Long userId = getUserId(authentication);
+        java.util.Map<String, Long> result = new java.util.LinkedHashMap<>();
+        result.put("all", orderInfoService.countByUserAndStatus(userId, null));
+        result.put("pendingPay", orderInfoService.countByUserAndStatus(userId, 0));
+        result.put("pendingShip", orderInfoService.countByUserAndStatus(userId, 1));
+        result.put("pendingReceive", orderInfoService.countByUserAndStatus(userId, 2));
+        result.put("completed", orderInfoService.countByUserAndStatus(userId, 3));
+        return ApiResponse.success(result);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ApiResponse<PageResult<OrderInfo>> list(
             @RequestParam(defaultValue = "1") int pageNum,

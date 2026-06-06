@@ -16,11 +16,11 @@
       </div>
       <!-- 订单统计 -->
       <div class="order-stats">
-        <div class="stat-item" @click="goToOrders(-1)"><span class="stat-num">--</span><span class="stat-label">全部</span></div>
-        <div class="stat-item" @click="goToOrders(0)"><span class="stat-num">--</span><span class="stat-label">待付款</span></div>
-        <div class="stat-item" @click="goToOrders(1)"><span class="stat-num">--</span><span class="stat-label">待发货</span></div>
-        <div class="stat-item" @click="goToOrders(2)"><span class="stat-num">--</span><span class="stat-label">待收货</span></div>
-        <div class="stat-item" @click="goToOrders(3)"><span class="stat-num">--</span><span class="stat-label">已完成</span></div>
+        <div class="stat-item" @click="goToOrders(-1)"><span class="stat-num">{{ orderCounts.all }}</span><span class="stat-label">全部</span></div>
+        <div class="stat-item" @click="goToOrders(0)"><span class="stat-num">{{ orderCounts.pendingPay }}</span><span class="stat-label">待付款</span></div>
+        <div class="stat-item" @click="goToOrders(1)"><span class="stat-num">{{ orderCounts.pendingShip }}</span><span class="stat-label">待发货</span></div>
+        <div class="stat-item" @click="goToOrders(2)"><span class="stat-num">{{ orderCounts.pendingReceive }}</span><span class="stat-label">待收货</span></div>
+        <div class="stat-item" @click="goToOrders(3)"><span class="stat-num">{{ orderCounts.completed }}</span><span class="stat-label">已完成</span></div>
       </div>
     </div>
 
@@ -60,9 +60,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
+import { orderApi } from '@/api/order'
 import { showConfirmDialog, showToast } from 'vant'
 
 const router = useRouter()
@@ -77,6 +78,13 @@ const avatarSrc = computed(() => {
   if (avatar.startsWith('http') || avatar.startsWith('data:')) return avatar
   return apiBase + avatar
 })
+
+const orderCounts = ref({ all: 0, pendingPay: 0, pendingShip: 0, pendingReceive: 0, completed: 0 })
+
+const loadOrderCounts = async () => {
+  if (!isLoggedIn.value) return
+  try { orderCounts.value = await orderApi.getOrderCounts() } catch (e) { /* ignore */ }
+}
 
 const goToLogin = () => router.push({ name: 'Login' })
 const goToOrders = (status) => {
@@ -100,6 +108,8 @@ const handleLogout = () => {
     .then(() => { userStore.logout(); showToast('已退出登录') })
     .catch(() => {})
 }
+
+onMounted(() => { loadOrderCounts() })
 </script>
 
 <style scoped>

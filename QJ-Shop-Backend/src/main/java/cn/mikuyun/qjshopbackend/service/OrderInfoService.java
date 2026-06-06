@@ -20,4 +20,6 @@ public interface OrderInfoService {
     void delete(Long id);
 
     PageResult<OrderInfo> pageByUser(int pageNum, int pageSize, Long userId, Integer status);
+
+    Long countByUserAndStatus(Long userId, Integer status);
 }

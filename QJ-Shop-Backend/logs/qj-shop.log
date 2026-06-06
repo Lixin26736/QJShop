@@ -1342,3 +1342,70 @@ This generated password is for development use only. Your security configuration
 2026-06-06 19:37:07.538 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2026-06-06 19:37:07.539 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2026-06-06 19:37:07.540 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-06-06 19:52:11.392 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - Starting QjShopBackendApplication using Java 17.0.14 with PID 37100 (D:\QJShop\QJ-Shop-Backend\target\classes started by Miku in D:\QJShop\QJ-Shop-Backend)
+2026-06-06 19:52:11.395 [restartedMain] DEBUG cn.mikuyun.qjshopbackend.QjShopBackendApplication - Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-06-06 19:52:11.396 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-06-06 19:52:11.444 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-06 19:52:11.445 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-06 19:52:12.942 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-06-06 19:52:12.955 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-06-06 19:52:12.955 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-06-06 19:52:13.014 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-06-06 19:52:13.014 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1569 ms
+2026-06-06 19:52:13.098 [restartedMain] DEBUG c.m.qjshopbackend.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-06-06 19:52:13.161 [restartedMain] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2026-06-06 19:52:13.829 [restartedMain] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2026-06-06 19:52:13.935 [restartedMain] DEBUG c.b.m.e.spring.MybatisSqlSessionFactoryBean - Registered plugin: 'com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor@bffdd3c'
+2026-06-06 19:52:13.936 [restartedMain] DEBUG c.b.m.e.spring.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was not specified.
+2026-06-06 19:52:14.555 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: a8ef730e-ba33-4f6c-9190-b6e14bac2c14
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-06-06 19:52:14.635 [restartedMain] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2026-06-06 19:52:14.895 [restartedMain] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2ba847fe, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2d09cad5, org.springframework.security.web.context.SecurityContextHolderFilter@6dbc67c3, org.springframework.security.web.header.HeaderWriterFilter@7683d2c7, org.springframework.web.filter.CorsFilter@34d0333, org.springframework.security.web.authentication.logout.LogoutFilter@2bf1ae1c, cn.mikuyun.qjshopbackend.security.JwtAuthenticationFilter@7015782, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@63962320, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@641f5c49, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2d8870de, org.springframework.security.web.session.SessionManagementFilter@2c4f26a1, org.springframework.security.web.access.ExceptionTranslationFilter@38df732d, org.springframework.security.web.access.intercept.AuthorizationFilter@639ca771]
+2026-06-06 19:52:15.188 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-06-06 19:52:15.243 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-06-06 19:52:15.255 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - Started QjShopBackendApplication in 4.272 seconds (process running for 4.736)
+2026-06-06 19:52:15.258 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL start create  ...  
+2026-06-06 19:52:15.258 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL end create  ...  
+2026-06-06 19:57:31.842 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-06 19:57:31.842 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-06-06 19:57:31.843 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-06-06 20:00:33.506 [http-nio-8080-exec-3] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource doc.html.]
+2026-06-06 20:05:01.828 [http-nio-8080-exec-4] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource doc.html.]
+2026-06-06 20:09:01.428 [http-nio-8080-exec-5] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .well-known/appspecific/com.chrome.devtools.json.]
+2026-06-06 20:09:11.746 [http-nio-8080-exec-1] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource admin.]
+2026-06-06 20:09:11.953 [http-nio-8080-exec-8] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .well-known/appspecific/com.chrome.devtools.json.]
+2026-06-06 20:26:28.759 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - Starting QjShopBackendApplication using Java 17.0.14 with PID 30932 (D:\QJShop\QJ-Shop-Backend\target\classes started by Miku in D:\QJShop\QJ-Shop-Backend)
+2026-06-06 20:26:28.761 [restartedMain] DEBUG cn.mikuyun.qjshopbackend.QjShopBackendApplication - Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-06-06 20:26:28.762 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-06-06 20:26:28.805 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-06 20:26:28.805 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-06 20:26:30.215 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-06-06 20:26:30.230 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-06-06 20:26:30.230 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-06-06 20:26:30.288 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-06-06 20:26:30.288 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1483 ms
+2026-06-06 20:26:30.365 [restartedMain] DEBUG c.m.qjshopbackend.security.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-06-06 20:26:30.428 [restartedMain] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2026-06-06 20:26:31.074 [restartedMain] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2026-06-06 20:26:31.179 [restartedMain] DEBUG c.b.m.e.spring.MybatisSqlSessionFactoryBean - Registered plugin: 'com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor@7349a78'
+2026-06-06 20:26:31.179 [restartedMain] DEBUG c.b.m.e.spring.MybatisSqlSessionFactoryBean - Property 'mapperLocations' was not specified.
+2026-06-06 20:26:31.764 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 7ad6a352-dc2f-45ff-8a07-81c8385bafc2
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-06-06 20:26:31.843 [restartedMain] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2026-06-06 20:26:32.111 [restartedMain] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5557bd89, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@45cde5e7, org.springframework.security.web.context.SecurityContextHolderFilter@6f0f31be, org.springframework.security.web.header.HeaderWriterFilter@563180e8, org.springframework.web.filter.CorsFilter@3ebb74df, org.springframework.security.web.authentication.logout.LogoutFilter@356b5c9d, cn.mikuyun.qjshopbackend.security.JwtAuthenticationFilter@65199dda, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@641715d3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@731cb920, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@8ba13d2, org.springframework.security.web.session.SessionManagementFilter@744d4ecb, org.springframework.security.web.access.ExceptionTranslationFilter@6195bd47, org.springframework.security.web.access.intercept.AuthorizationFilter@414a381c]
+2026-06-06 20:26:32.403 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-06-06 20:26:32.459 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-06-06 20:26:32.470 [restartedMain] INFO  cn.mikuyun.qjshopbackend.QjShopBackendApplication - Started QjShopBackendApplication in 4.099 seconds (process running for 4.539)
+2026-06-06 20:26:32.473 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL start create  ...  
+2026-06-06 20:26:32.473 [restartedMain] DEBUG c.b.mybatisplus.autoconfigure.DdlApplicationRunner -   ...  DDL end create  ...  
+2026-06-06 20:26:45.088 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-06 20:26:45.088 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-06-06 20:26:45.089 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms

@@ -18,7 +18,7 @@ import java.util.*;
 @RequestMapping("/api/upload")
 public class FileUploadController {
 
-    @Value("${file.upload.dir:uploads}")
+    @Value("${file.upload.dir:#{systemProperties['user.dir']}/uploads}")
     private String uploadDir;
 
     @PostMapping("/image")
@@ -34,10 +34,14 @@ public class FileUploadController {
         }
 
         try {
+            // 确保根目录存在
+            File rootDir = new File(uploadDir);
+            if (!rootDir.exists()) rootDir.mkdirs();
+
             // 按日期分目录
             String dateDir = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-            Path uploadPath = Paths.get(uploadDir, dateDir);
-            Files.createDirectories(uploadPath);
+            File datePath = new File(rootDir, dateDir);
+            if (!datePath.exists()) datePath.mkdirs();
 
             // 生成唯一文件名
             String originalName = file.getOriginalFilename();
@@ -46,11 +50,11 @@ public class FileUploadController {
             String newFileName = UUID.randomUUID().toString().replace("-", "") + ext;
 
             // 保存文件
-            File destFile = uploadPath.resolve(newFileName).toFile();
+            File destFile = new File(datePath, newFileName);
             file.transferTo(destFile);
 
             // 返回访问URL
-            String fileUrl = "/" + dateDir + "/" + newFileName;
+            String fileUrl = "/uploads/" + dateDir + "/" + newFileName;
             Map<String, String> result = new LinkedHashMap<>();
             result.put("url", fileUrl);
             result.put("name", originalName);

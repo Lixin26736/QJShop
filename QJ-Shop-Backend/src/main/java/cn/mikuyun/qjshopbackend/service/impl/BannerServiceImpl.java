@@ -25,7 +25,7 @@ public class BannerServiceImpl implements BannerService {
         LambdaQueryWrapper<Banner> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Banner::getStatus, 1)
                 .eq(StrUtil.isNotBlank(position), Banner::getPosition, position)
-                .le(Banner::getStartTime, now)
+                .and(w -> w.isNull(Banner::getStartTime).or().le(Banner::getStartTime, now))
                 .and(w -> w.isNull(Banner::getEndTime).or().ge(Banner::getEndTime, now))
                 .orderByAsc(Banner::getSortOrder);
         return bannerMapper.selectList(wrapper);

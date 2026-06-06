@@ -12,7 +12,7 @@
         <div v-for="item in cartItems" :key="item.id" class="cart-item">
           <van-checkbox :name="item.id" />
           <div class="item-image">
-            <img :src="item.mainImage" :alt="item.name" />
+            <img :src="getImageUrl(item.mainImage) || getPlaceholder(item.name, item.id, 80, 80)" :alt="item.name" @error="e => e.target.src = getPlaceholder(item.name, item.id, 80, 80)" />
           </div>
           <div class="item-info">
             <div class="item-name">{{ item.name }}</div>
@@ -34,6 +34,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/store/cart'
+import { getImageUrl, getPlaceholder } from '@/utils/image'
 import { showToast } from 'vant'
 
 const router = useRouter()

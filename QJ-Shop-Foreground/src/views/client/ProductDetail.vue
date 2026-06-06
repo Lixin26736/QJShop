@@ -103,7 +103,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { productApi } from '@/api/product'
 import { reviewApi } from '@/api/review'
 import { favoriteApi } from '@/api/favorite'
-import { uploadApi } from '@/api/upload'
+import { getImageUrl, getPlaceholder } from '@/utils/image'
 import { useCartStore } from '@/store/cart'
 import { useUserStore } from '@/store/user'
 import { showToast } from 'vant'
@@ -124,16 +124,24 @@ const showSpec = ref(false)
 
 const cartCount = computed(() => cartStore.cartCount)
 
+const pName = computed(() => product.value.name || '商品')
+const pId = computed(() => product.value.id || 0)
+
 const images = computed(() => {
   const imgs = []
   if (product.value.mainImage) imgs.push(product.value.mainImage)
   if (product.value.detailImages) {
-    product.value.detailImages.split(',').filter(Boolean).forEach(img => imgs.push(img))
+    try {
+      const arr = typeof product.value.detailImages === 'string'
+        ? JSON.parse(product.value.detailImages)
+        : product.value.detailImages
+      if (Array.isArray(arr)) arr.forEach(img => imgs.push(img))
+      else product.value.detailImages.split(',').filter(Boolean).forEach(img => imgs.push(img.trim()))
+    } catch { /* ignore */ }
   }
-  return imgs.length > 0 ? imgs : ['https://via.placeholder.com/375x375']
+  if (imgs.length === 0) imgs.push(getPlaceholder(pName.value, pId.value, 375, 375))
+  return imgs
 })
-
-const getImageUrl = (path) => uploadApi.getImageUrl(path)
 
 const loadData = async () => {
   const id = route.params.id

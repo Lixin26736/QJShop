@@ -122,7 +122,9 @@
         <el-table-column prop="name" label="商品名称" width="200" />
         <el-table-column prop="mainImage" label="主图" width="100">
           <template #default="scope">
-            <el-image :src="scope.row.mainImage" style="width: 60px; height: 60px" fit="cover" />
+            <el-image :src="getImageUrl(scope.row.mainImage) || getPlaceholder(scope.row.name, scope.row.id, 60, 60)" style="width: 60px; height: 60px" fit="cover">
+              <template #error><img :src="getPlaceholder(scope.row.name, scope.row.id, 60, 60)" style="width:60px;height:60px;object-fit:cover" /></template>
+            </el-image>
           </template>
         </el-table-column>
         <el-table-column prop="price" label="价格" width="100">
@@ -319,6 +321,7 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Close } from '@element-plus/icons-vue'
+import { getImageUrl, getPlaceholder } from '@/utils/image'
 import request from '@/utils/request'
 
 const currentLevel = ref(0) // 0: 一级分类, 1: 二级分类, 2: 商品列表

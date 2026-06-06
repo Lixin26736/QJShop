@@ -12,7 +12,7 @@
       <div class="section">
         <div class="section-title">商品信息</div>
         <div v-for="item in items" :key="item.id" class="order-item">
-          <img :src="getImage(item.productImage)" class="item-image" />
+          <img :src="getImage(item)" class="item-image" @error="e => e.target.src = getPlaceholder(item.productName, item.id, 80, 80)" />
           <div class="item-info">
             <div class="item-name">{{ item.productName }}</div>
             <div class="item-spec" v-if="item.specInfo">{{ item.specInfo }}</div>
@@ -55,7 +55,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { orderApi } from '@/api/order'
-import { uploadApi } from '@/api/upload'
+import { getImageUrl, getPlaceholder } from '@/utils/image'
 import { showToast, showConfirmDialog } from 'vant'
 
 const route = useRoute()
@@ -86,7 +86,7 @@ const handlePay = async () => {
   loadDetail()
 }
 
-const getImage = (img) => uploadApi.getImageUrl(img || 'https://via.placeholder.com/80')
+const getImage = (item) => getImageUrl(item.productImage) || getPlaceholder(item.productName, item.id, 80, 80)
 
 const statusText = (s) => ({ 0: '待付款', 1: '待发货', 2: '待收货', 3: '已完成', 4: '已取消' }[s] || '未知')
 

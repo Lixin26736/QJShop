@@ -6,7 +6,7 @@
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="loadFavorites">
         <div v-for="item in favorites" :key="item.id" class="fav-card" @click="goProduct(item.productId)">
-          <img :src="getImage(item.productImage)" class="fav-image" />
+          <img :src="getImage(item)" class="fav-image" @error="e => e.target.src = getPlaceholder(item.productName, item.productId, 80, 80)" />
           <div class="fav-info">
             <div class="fav-name">{{ item.productName }}</div>
             <div class="fav-price">¥{{ item.price }}</div>
@@ -22,7 +22,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { favoriteApi } from '@/api/favorite'
-import { uploadApi } from '@/api/upload'
+import { getImageUrl, getPlaceholder } from '@/utils/image'
 import { showToast } from 'vant'
 
 const router = useRouter()
@@ -32,7 +32,7 @@ const finished = ref(false)
 const refreshing = ref(false)
 let pageNum = 1
 
-const getImage = (img) => uploadApi.getImageUrl(img || 'https://via.placeholder.com/80')
+const getImage = (item) => getImageUrl(item.productImage) || getPlaceholder(item.productName, item.productId, 80, 80)
 
 const loadFavorites = async () => {
   if (refreshing.value) { pageNum = 1; finished.value = false }

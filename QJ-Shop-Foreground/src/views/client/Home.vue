@@ -28,7 +28,7 @@
       </div>
       <div class="product-grid" :style="{ gridTemplateColumns: `repeat(${productCols}, 1fr)` }">
         <div v-for="product in hotProducts" :key="product.id" class="product-card" @click="goToProduct(product.id)">
-          <img :src="product.mainImage" :alt="product.name" loading="lazy" />
+          <img :src="getImageUrl(product.mainImage) || getPlaceholder(product.name, product.id, 300, 200)" :alt="product.name" loading="lazy" @error="e => e.target.src = getPlaceholder(product.name, product.id, 300, 200)" />
           <div class="product-info">
             <div class="product-name">{{ product.name }}</div>
             <div class="product-price">¥{{ product.price }}</div>
@@ -45,7 +45,7 @@
       </div>
       <div class="product-grid" :style="{ gridTemplateColumns: `repeat(${productCols}, 1fr)` }">
         <div v-for="product in newProducts" :key="product.id" class="product-card" @click="goToProduct(product.id)">
-          <img :src="product.mainImage" :alt="product.name" loading="lazy" />
+          <img :src="getImageUrl(product.mainImage) || getPlaceholder(product.name, product.id, 300, 200)" :alt="product.name" loading="lazy" @error="e => e.target.src = getPlaceholder(product.name, product.id, 300, 200)" />
           <div class="product-info">
             <div class="product-name">{{ product.name }}</div>
             <div class="product-price">¥{{ product.price }}</div>
@@ -62,7 +62,7 @@ import { useRouter } from 'vue-router'
 import { productApi } from '@/api/product'
 import { categoryApi } from '@/api/category'
 import { bannerApi } from '@/api/banner'
-import { uploadApi } from '@/api/upload'
+import { getImageUrl, getPlaceholder } from '@/utils/image'
 import { useResponsive } from '@/utils/responsive'
 
 const router = useRouter()
@@ -104,7 +104,7 @@ const loadData = async () => {
     categories.value = categoryRes || []
     hotProducts.value = hotRes || []
     newProducts.value = newRes || []
-    banners.value = (bannerRes || []).map(b => ({ ...b, image: uploadApi.getImageUrl(b.image) }))
+    banners.value = (bannerRes || []).map(b => ({ ...b, image: getImageUrl(b.image) || getPlaceholder(b.title, b.id, 800, 300) }))
   } catch (error) {
     console.error('加载数据失败:', error)
   }

@@ -25,7 +25,7 @@
           <van-grid v-else :column-num="2" :gutter="10">
             <van-grid-item v-for="product in products" :key="product.id">
               <div class="product-card" @click="goToProduct(product.id)">
-                <img :src="product.mainImage" :alt="product.name" loading="lazy" />
+                <img :src="getImageUrl(product.mainImage) || getPlaceholder(product.name, product.id, 150, 150)" :alt="product.name" loading="lazy" @error="e => e.target.src = getPlaceholder(product.name, product.id, 150, 150)" />
                 <div class="product-info">
                   <div class="product-name">{{ product.name }}</div>
                   <div class="product-price">¥{{ product.price }}</div>
@@ -43,6 +43,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import request from '@/utils/request'
+import { getImageUrl, getPlaceholder } from '@/utils/image'
 
 const router = useRouter()
 const route = useRoute()

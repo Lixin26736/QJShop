@@ -11,7 +11,7 @@
         <el-table-column prop="id" label="ID" width="60" />
         <el-table-column prop="image" label="图片" width="150">
           <template #default="{ row }">
-            <el-image :src="row.image" style="width:120px;height:60px" fit="cover" />
+            <el-image :src="getImageUrl(row.image) || getPlaceholder(row.title, row.id, 120, 60)" style="width:120px;height:60px" fit="cover"><template #error><img :src="getPlaceholder(row.title, row.id, 120, 60)" style="width:120px;height:60px;object-fit:cover" /></template></el-image>
           </template>
         </el-table-column>
         <el-table-column prop="title" label="标题" width="150" />
@@ -62,6 +62,7 @@ import { ref, reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { bannerApi } from '@/api/banner'
 import { uploadApi } from '@/api/upload'
+import { getImageUrl, getPlaceholder } from '@/utils/image'
 
 const list = ref([])
 const loading = ref(false)

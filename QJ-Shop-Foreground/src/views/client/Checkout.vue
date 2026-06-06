@@ -21,7 +21,7 @@
     <div class="section">
       <div class="section-title">商品信息</div>
       <div v-for="item in checkoutItems" :key="item.id" class="checkout-item">
-        <img :src="getImage(item.mainImage)" class="item-image" />
+        <img :src="getImage(item)" class="item-image" @error="e => e.target.src = getPlaceholder(item.name, item.id, 80, 80)" />
         <div class="item-info">
           <div class="item-name">{{ item.name }}</div>
           <div class="item-spec" v-if="item.specInfo">{{ item.specInfo }}</div>
@@ -85,7 +85,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useCartStore } from '@/store/cart'
 import { addressApi } from '@/api/address'
 import { orderApi } from '@/api/order'
-import { uploadApi } from '@/api/upload'
+import { getImageUrl, getPlaceholder } from '@/utils/image'
 import { showToast } from 'vant'
 
 const router = useRouter()
@@ -121,7 +121,7 @@ const totalPrice = computed(() => {
   return checkoutItems.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
 })
 
-const getImage = (img) => uploadApi.getImageUrl(img || 'https://via.placeholder.com/80')
+const getImage = (item) => getImageUrl(item.mainImage) || getPlaceholder(item.name, item.id, 80, 80)
 
 const loadAddresses = async () => {
   try {

@@ -95,40 +95,68 @@ const showEdit = (id) => {
 }
 
 const getLocation = () => {
-  if (!navigator.geolocation) { showToast('浏览器不支持定位'); return }
+  if (!navigator.geolocation) {
+    ipFallback()
+    return
+  }
   locating.value = true
 
   const onSuccess = async (pos) => {
-    try {
-      const { latitude, longitude } = pos.coords
-      // 优先使用Nominatim，带上User-Agent头
-      let addr = await fetchAddr(latitude, longitude)
-      if (!addr) {
-        // 回退: 尝试另一种方式获取城市信息
-        addr = await fetchAddrFallback(latitude, longitude)
-      }
-      if (addr) {
-        form.value.province = addr.province || addr.state || ''
-        form.value.city = addr.city || addr.county || ''
-        form.value.district = addr.district || addr.town || ''
-        showToast('已获取位置')
-      } else {
-        showToast('位置解析失败,请手动输入')
-      }
-    } catch (e) {
-      showToast('位置解析失败: ' + (e.message || '请手动输入'))
-    } finally {
-      locating.value = false
-    }
+    const { latitude, longitude } = pos.coords
+    const addr = await fetchAddr(latitude, longitude) || await fetchAddrFallback(latitude, longitude)
+    fillAddress(addr)
+    locating.value = false
   }
 
   const onError = (err) => {
     locating.value = false
-    const msg = err.PERMISSION_DENIED ? '请允许定位权限' : err.TIMEOUT ? '定位超时' : '定位不可用'
-    showToast(msg)
+    if (err.code === 1) {
+      // PERMISSION_DENIED - 用户拒绝了，尝试IP定位
+      ipFallback()
+    } else if (err.code === 3) {
+      showToast('定位超时,使用IP定位')
+      ipFallback()
+    } else {
+      ipFallback()
+    }
   }
 
-  navigator.geolocation.getCurrentPosition(onSuccess, onError, { timeout: 10000, enableHighAccuracy: false })
+  navigator.geolocation.getCurrentPosition(onSuccess, onError, { timeout: 8000, enableHighAccuracy: false })
+}
+
+// IP定位回退方案
+async function ipFallback() {
+  locating.value = true
+  try {
+    const res = await fetch('https://ipapi.co/json/')
+    if (!res.ok) throw new Error('failed')
+    const data = await res.json()
+    fillAddress({
+      province: data.region || '',
+      city: data.city || '',
+      district: ''
+    })
+    showToast('已通过IP获取位置')
+  } catch (e) {
+    try {
+      // 第二回退
+      const res2 = await fetch('https://api.ip.sb/geoip/')
+      const d2 = await res2.json()
+      fillAddress({ province: d2.region || '', city: d2.city || '', district: '' })
+      showToast('已通过IP获取位置')
+    } catch (e2) {
+      showToast('无法获取位置,请手动输入')
+    }
+  } finally {
+    locating.value = false
+  }
+}
+
+function fillAddress(addr) {
+  if (!addr) { showToast('位置解析失败,请手动输入'); return }
+  form.value.province = addr.province || addr.state || ''
+  form.value.city = addr.city || addr.county || ''
+  form.value.district = addr.district || addr.town || ''
 }
 
 async function fetchAddr(lat, lon) {

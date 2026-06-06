@@ -59,12 +59,6 @@ const routes = [
         meta: { title: '我的订单', requiresAuth: true }
       },
       {
-        path: 'order/:id',
-        name: 'OrderDetail',
-        component: () => import('@/views/client/OrderDetail.vue'),
-        meta: { title: '订单详情', requiresAuth: true }
-      },
-      {
         path: 'address',
         name: 'AddressList',
         component: () => import('@/views/client/AddressList.vue'),
@@ -75,18 +69,6 @@ const routes = [
         name: 'FavoriteList',
         component: () => import('@/views/client/FavoriteList.vue'),
         meta: { title: '我的收藏', requiresAuth: true }
-      },
-      {
-        path: 'product/:id',
-        name: 'ProductDetail',
-        component: () => import('@/views/client/ProductDetail.vue'),
-        meta: { title: '商品详情' }
-      },
-      {
-        path: 'checkout',
-        name: 'Checkout',
-        component: () => import('@/views/client/Checkout.vue'),
-        meta: { title: '确认订单', requiresAuth: true }
       },
       {
         path: 'settings',
@@ -101,6 +83,25 @@ const routes = [
         meta: { title: 'AI客服' }
       }
     ]
+  },
+  // 独立页面(无底部导航栏)
+  {
+    path: '/client/product/:id',
+    name: 'ProductDetail',
+    component: () => import('@/views/client/ProductDetail.vue'),
+    meta: { title: '商品详情' }
+  },
+  {
+    path: '/client/checkout',
+    name: 'Checkout',
+    component: () => import('@/views/client/Checkout.vue'),
+    meta: { title: '确认订单', requiresAuth: true }
+  },
+  {
+    path: '/client/order/:id',
+    name: 'OrderDetail',
+    component: () => import('@/views/client/OrderDetail.vue'),
+    meta: { title: '订单详情', requiresAuth: true }
   },
   // 管理员登录
   {

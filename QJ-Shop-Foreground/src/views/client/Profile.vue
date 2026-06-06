@@ -5,7 +5,7 @@
       <div class="card-bg"></div>
       <div class="card-content">
         <div class="avatar-wrap">
-          <img v-if="userInfo.avatar" :src="userInfo.avatar.startsWith('http')||userInfo.avatar.startsWith('data:') ? userInfo.avatar : (import.meta.env.VITE_API_BASE_URL||'')+userInfo.avatar" class="avatar-img" />
+          <img v-if="avatarSrc" :src="avatarSrc" class="avatar-img" />
           <van-icon v-else name="manager" size="32" color="#fff" />
         </div>
         <div class="user-detail">
@@ -69,6 +69,14 @@ const router = useRouter()
 const userStore = useUserStore()
 const isLoggedIn = computed(() => userStore.isLoggedIn)
 const userInfo = computed(() => userStore.userInfo)
+const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+
+const avatarSrc = computed(() => {
+  const avatar = userInfo.value.avatar
+  if (!avatar) return ''
+  if (avatar.startsWith('http') || avatar.startsWith('data:')) return avatar
+  return apiBase + avatar
+})
 
 const goToLogin = () => router.push({ name: 'Login' })
 const goToOrders = (status) => {

@@ -3,7 +3,6 @@ import { webview } from '@kit.ArkWeb'
 @Entry
 @Component
 struct Index {
-
   build() {
     Column() {
       Web({ src: 'http://47.100.214.45:8080/', controller: new webview.WebviewController() })

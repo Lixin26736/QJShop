@@ -97,19 +97,62 @@ const showEdit = (id) => {
 const getLocation = () => {
   if (!navigator.geolocation) { showToast('浏览器不支持定位'); return }
   locating.value = true
-  navigator.geolocation.getCurrentPosition(async (pos) => {
+
+  const onSuccess = async (pos) => {
     try {
       const { latitude, longitude } = pos.coords
-      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=zh`)
-      const data = await res.json()
-      const addr = data.address || {}
-      form.value.province = addr.province || addr.state || ''
-      form.value.city = addr.city || addr.county || ''
-      form.value.district = addr.district || addr.town || ''
-      showToast('已获取位置')
-    } catch (e) { showToast('位置解析失败') }
-    finally { locating.value = false }
-  }, () => { showToast('定位失败'); locating.value = false })
+      // 优先使用Nominatim，带上User-Agent头
+      let addr = await fetchAddr(latitude, longitude)
+      if (!addr) {
+        // 回退: 尝试另一种方式获取城市信息
+        addr = await fetchAddrFallback(latitude, longitude)
+      }
+      if (addr) {
+        form.value.province = addr.province || addr.state || ''
+        form.value.city = addr.city || addr.county || ''
+        form.value.district = addr.district || addr.town || ''
+        showToast('已获取位置')
+      } else {
+        showToast('位置解析失败,请手动输入')
+      }
+    } catch (e) {
+      showToast('位置解析失败: ' + (e.message || '请手动输入'))
+    } finally {
+      locating.value = false
+    }
+  }
+
+  const onError = (err) => {
+    locating.value = false
+    const msg = err.PERMISSION_DENIED ? '请允许定位权限' : err.TIMEOUT ? '定位超时' : '定位不可用'
+    showToast(msg)
+  }
+
+  navigator.geolocation.getCurrentPosition(onSuccess, onError, { timeout: 10000, enableHighAccuracy: false })
+}
+
+async function fetchAddr(lat, lon) {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=zh`,
+      { headers: { 'User-Agent': 'QJShop/1.0' } }
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.address || null
+  } catch (e) { return null }
+}
+
+async function fetchAddrFallback(lat, lon) {
+  try {
+    const res = await fetch(
+      `https://geocode.maps.co/reverse?lat=${lat}&lon=${lon}&format=json`
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    const addr = data.address || {}
+    return { province: addr.state || '', city: addr.city || addr.county || '', district: addr.district || '' }
+  } catch (e) { return null }
 }
 
 const handleSave = async () => {
